@@ -129,60 +129,60 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
 
   return (
     <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-3">
-      <div className="flex items-center gap-2 px-2.5 pb-2">
+      <div className="flex items-center gap-2 px-2.5">
         <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
-        <span className="text-xs text-foreground/30">Статус</span>
-      </div>
-      <div className="overflow-hidden px-2.5">
-        <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap w-[85%] ${collapsed ? 'invisible absolute' : ''}`}>
-          {roadmapSteps.map((step, i, arr) => {
-            const isActive = status === step.key;
-            const stepIdx = roadmapOrder.indexOf(step.key);
-            const isPassed = currentIdx > stepIdx && currentIdx !== -1;
-            return (
-              <div key={step.key} className="flex items-center flex-1 min-w-0">
-                <button
-                  onClick={() => onStatusChange?.(step.key)}
-                  className={`flex items-center justify-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full cursor-pointer hover:opacity-80 ${
-                    isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'
-                  }`}
-                >
-                  <step.icon className="w-3 h-3 shrink-0" />
-                  <span className={`text-[10px] font-medium truncate ${isActive ? 'font-semibold' : ''}`}>{step.label}</span>
-                </button>
-                {i < arr.length - 1 && (
-                  <div className="w-3 h-px shrink-0 bg-foreground/10" />
-                )}
-              </div>
-            );
-          })}
-        </div>
-        {collapsed && (
-          <Popover>
-            <PopoverTrigger asChild>
-              <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold ${activeStep.bg} ${activeStep.color} ring-1 ring-inset ring-current/20 w-full`}>
-                <activeStep.icon className="w-3 h-3 shrink-0" />
-                <span className="truncate">{activeStep.label}</span>
-                <ChevronDown className="w-3 h-3 ml-auto shrink-0 opacity-50" />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-48 p-1" align="start">
-              {roadmapSteps.map(step => {
-                const isActive = status === step.key;
-                return (
+        <span className="text-xs text-foreground/30 shrink-0">Статус</span>
+        <div className="overflow-hidden flex-1 min-w-0">
+          <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap ${collapsed ? 'invisible absolute' : ''}`}>
+            {roadmapSteps.map((step, i, arr) => {
+              const isActive = status === step.key;
+              const stepIdx = roadmapOrder.indexOf(step.key);
+              const isPassed = currentIdx > stepIdx && currentIdx !== -1;
+              return (
+                <div key={step.key} className="flex items-center flex-1 min-w-0">
                   <button
-                    key={step.key}
                     onClick={() => onStatusChange?.(step.key)}
-                    className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}
+                    className={`flex items-center justify-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full cursor-pointer hover:opacity-80 ${
+                      isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'
+                    }`}
                   >
-                    <step.icon className="w-3.5 h-3.5 shrink-0" />
-                    {step.label}
+                    <step.icon className="w-3 h-3 shrink-0" />
+                    <span className={`text-[10px] font-medium truncate ${isActive ? 'font-semibold' : ''}`}>{step.label}</span>
                   </button>
-                );
-              })}
-            </PopoverContent>
-          </Popover>
-        )}
+                  {i < arr.length - 1 && (
+                    <div className="w-3 h-px shrink-0 bg-foreground/10" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          {collapsed && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold ${activeStep.bg} ${activeStep.color} ring-1 ring-inset ring-current/20 w-full`}>
+                  <activeStep.icon className="w-3 h-3 shrink-0" />
+                  <span className="truncate">{activeStep.label}</span>
+                  <ChevronDown className="w-3 h-3 ml-auto shrink-0 opacity-50" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-48 p-1" align="start">
+                {roadmapSteps.map(step => {
+                  const isActive = status === step.key;
+                  return (
+                    <button
+                      key={step.key}
+                      onClick={() => onStatusChange?.(step.key)}
+                      className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}
+                    >
+                      <step.icon className="w-3.5 h-3.5 shrink-0" />
+                      {step.label}
+                    </button>
+                  );
+                })}
+              </PopoverContent>
+            </Popover>
+          )}
+        </div>
       </div>
     </div>
   );
