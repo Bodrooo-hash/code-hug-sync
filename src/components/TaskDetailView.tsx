@@ -144,7 +144,7 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
                 <button
                   onClick={() => onStatusChange?.(step.key)}
                   className={`flex items-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full cursor-pointer hover:opacity-80 ${
-                    isActive ? `${step.bg} ${step.color} ring-2 ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'
+                    isActive ? `${step.bg} ${step.color} ring-[1.5px] ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'
                   }`}
                 >
                   <step.icon className="w-3 h-3 shrink-0" />
