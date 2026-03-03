@@ -99,11 +99,11 @@ const ChecklistSettingsMenu = ({ onEdit, onCopy, onDelete, onNewChecklist }: {on
 
 };
 const roadmapSteps = [
-  { key: "1", label: "Новая", color: "text-teal-600", bg: "bg-teal-500/15", icon: Sparkles },
-  { key: "3", label: "В работе", color: "text-blue1", bg: "bg-blue1/15", icon: Play },
+  { key: "new", label: "Новая", color: "text-teal-600", bg: "bg-teal-500/15", icon: Sparkles },
+  { key: "inwork", label: "В работе", color: "text-blue1", bg: "bg-blue1/15", icon: Play },
   { key: "help", label: "Нужна помощь", color: "text-red-600", bg: "bg-red-500/15", icon: Pause },
   { key: "approval", label: "На согласовании", color: "text-yellow-600", bg: "bg-yellow-500/15", icon: ShieldCheck },
-  { key: "5", label: "Завершена", color: "text-green-600", bg: "bg-green-500/15", icon: CircleCheck },
+  { key: "done", label: "Завершена", color: "text-green-600", bg: "bg-green-500/15", icon: CircleCheck },
 ];
 const roadmapOrder = roadmapSteps.map(s => s.key);
 
@@ -316,11 +316,11 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
         } else if (title.includes("согласовани")) {
           setLocalStatus("approval");
         } else if (title.includes("новые") || title.includes("новая")) {
-          setLocalStatus("1");
+          setLocalStatus("new");
         } else if (title.includes("в работе")) {
-          setLocalStatus("3");
+          setLocalStatus("inwork");
         } else if (title.includes("заверш")) {
-          setLocalStatus("5");
+          setLocalStatus("done");
         }
       }
     }
@@ -343,31 +343,31 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
   const handleStatusChange = async (key: string) => {
     const kanbanKeys: Record<string, string> = {
+      new: "новые",
+      inwork: "в работе",
       help: "помощь",
       approval: "согласовани",
+      done: "заверш",
     };
 
-    if (kanbanKeys[key]) {
-      const searchTerm = kanbanKeys[key];
-      const stage = Object.values(kanbanStages).find(
-        (s) => s.TITLE?.toLowerCase().includes(searchTerm)
-      );
-      if (!stage) {
-        toast.error(`Стадия не найдена в канбане этой группы`);
-        return;
-      }
-      setSaving(true);
-      try {
-        await moveTaskToKanbanStage(task.id, stage.ID);
-        setLocalStatus(key);
-        toast.success(`Задача перемещена на стадию «${stage.TITLE}»`);
-      } catch (e: any) {
-        toast.error("Ошибка: " + (e?.message || "неизвестная ошибка"));
-      } finally {
-        setSaving(false);
-      }
-    } else {
-      await handleUpdateField("STATUS", key);
+    const searchTerm = kanbanKeys[key];
+    if (!searchTerm) return;
+    const stage = Object.values(kanbanStages).find(
+      (s) => s.TITLE?.toLowerCase().includes(searchTerm)
+    );
+    if (!stage) {
+      toast.error(`Стадия не найдена в канбане этой группы`);
+      return;
+    }
+    setSaving(true);
+    try {
+      await moveTaskToKanbanStage(task.id, stage.ID);
+      setLocalStatus(key);
+      toast.success(`Задача перемещена на стадию «${stage.TITLE}»`);
+    } catch (e: any) {
+      toast.error("Ошибка: " + (e?.message || "неизвестная ошибка"));
+    } finally {
+      setSaving(false);
     }
   };
 
