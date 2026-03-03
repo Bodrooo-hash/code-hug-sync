@@ -586,6 +586,11 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 </div>
               </InfoRow>
 
+              {/* Статус */}
+              <InfoRow label="Статус">
+                <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium ${st.bg} ${st.color}`}>{st.label}</span>
+              </InfoRow>
+
               {/* Крайний срок */}
               <Collapsible>
                 <div className="flex items-center gap-3 py-2">
@@ -638,10 +643,6 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                   </div>
                 </div>
                 <CollapsibleContent>
-                  {/* Статус */}
-                  <InfoRow label="Статус">
-                    <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium ${st.bg} ${st.color}`}>{st.label}</span>
-                  </InfoRow>
                   <InfoRow label="Дата создания">
                     <div className="flex items-center gap-1.5">
                       <CalendarIcon className="w-3.5 h-3.5 text-foreground/40" />
