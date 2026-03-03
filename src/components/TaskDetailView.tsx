@@ -840,8 +840,10 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                     className="group/desc flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors"
                   >
                     <FileText className="w-4 h-4 text-foreground/30 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
-                    <div className="flex-1 min-w-0 text-xs text-foreground/30 group-hover/desc:text-foreground/50 truncate text-left transition-colors" dangerouslySetInnerHTML={{ __html: localDescription || 'Описание' }} />
-                    <Pencil className="w-3 h-3 text-foreground/20 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
+                    <div className="flex items-center gap-1.5 min-w-0 text-xs text-foreground/30 group-hover/desc:text-foreground/50 truncate text-left transition-colors">
+                      <span dangerouslySetInnerHTML={{ __html: localDescription || 'Описание' }} />
+                      <Pencil className="w-3 h-3 text-foreground/20 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
+                    </div>
                   </button>
                 </div>
               )}
