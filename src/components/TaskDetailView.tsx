@@ -562,8 +562,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
           </DropdownMenu>
         </div>
         <ScrollArea className="flex-1 min-h-0">
-          <div className="p-5 space-y-4 bg-background dark:bg-card">
-            <div className="rounded-xl border border-border bg-card dark:bg-muted/50 px-3">
+          <div className="p-5 space-y-4 bg-background border border-border rounded-xl m-2">
+            <div className="rounded-xl border border-border bg-card px-3">
               {/* Постановщик */}
               <InfoRow label="Постановщик">
                 <div className="relative">
@@ -1001,14 +1001,14 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             )}
 
             {/* Результаты выполнения */}
-            {localStatus === "approval" && <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
-                <FileText className="w-3.5 h-3.5 text-blue1" />
-                <span className="text-xs font-medium text-blue1">Финальный результат задачи</span>
+                <FileText className="w-3.5 h-3.5 text-foreground/40" />
+                <span className="text-xs font-medium text-foreground/60">Финальный результат задачи</span>
               </div>
               <textarea
-                placeholder="Вы - большой молодец! Добавьте финальное описание выполненных работ и результатов..."
-                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed" />
+
+                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed" placeholder="\u0422\u044B - \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u043C\u043E\u043B\u043E\u0434\u0435\u0446! \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0444\u0438\u043D\u0430\u043B\u044C\u043D\u043E\u0435 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u043D\u044B\u0445 \u0440\u0430\u0431\u043E\u0442 \u0438 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432..." />
               
               <div className="mt-1.5 border-t border-foreground/[0.06] pt-1.5">
                 <button onClick={() => resultFileInputRef.current?.click()} className="group/rf flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors">
@@ -1039,7 +1039,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                   </div>
                 }
               </div>
-            </div>}
+            </div>
           </div>
         </ScrollArea>
       </div>
