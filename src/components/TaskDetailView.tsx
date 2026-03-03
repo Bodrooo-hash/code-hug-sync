@@ -562,8 +562,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
           </DropdownMenu>
         </div>
         <ScrollArea className="flex-1 min-h-0">
-          <div className="p-5 space-y-4 bg-background border border-border rounded-xl m-2">
-            <div className="rounded-xl border border-border bg-card px-3">
+          <div className="p-5 space-y-4 bg-background dark:bg-card">
+            <div className="rounded-xl border border-border bg-card dark:bg-muted/50 px-3">
               {/* Постановщик */}
               <InfoRow label="Постановщик">
                 <div className="relative">
@@ -1001,14 +1001,14 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             )}
 
             {/* Результаты выполнения */}
-            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+            {localStatus === "approval" && <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
                 <FileText className="w-3.5 h-3.5 text-blue1" />
                 <span className="text-xs font-medium text-blue1">Финальный результат задачи</span>
               </div>
               <textarea
-
-                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed" placeholder="Ты - молодец! Добавь финальный результат задачи" />
+                placeholder="Вы - большой молодец! Добавьте финальное описание выполненных работ и результатов..."
+                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed" />
               
               <div className="mt-1.5 border-t border-foreground/[0.06] pt-1.5">
                 <button onClick={() => resultFileInputRef.current?.click()} className="group/rf flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors">
@@ -1039,7 +1039,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                   </div>
                 }
               </div>
-            </div>
+            </div>}
           </div>
         </ScrollArea>
       </div>
