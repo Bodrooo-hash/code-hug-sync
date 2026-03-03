@@ -842,7 +842,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                     <FileText className="w-4 h-4 text-foreground/30 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
                     <div className="flex items-center gap-1.5 min-w-0 text-xs text-foreground/30 group-hover/desc:text-foreground/50 truncate text-left transition-colors">
                       <span dangerouslySetInnerHTML={{ __html: localDescription || 'Описание' }} />
-                      <Pencil className="w-3 h-3 text-foreground/20 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
+                      <Pencil className="w-3 h-3 text-foreground/20 group-hover/desc:text-foreground/50 transition-colors shrink-0 ml-3" />
                     </div>
                   </button>
                 </div>
