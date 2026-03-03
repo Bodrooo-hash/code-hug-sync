@@ -128,13 +128,9 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
   }, []);
 
   return (
-    <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-3">
-      <div className="flex items-center gap-2 px-2.5 pb-2">
-        <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
-        <span className="text-xs text-foreground/30">Статус</span>
-      </div>
-      <div className="overflow-hidden px-2.5">
-        <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap w-[85%] ${collapsed ? 'invisible absolute' : ''}`}>
+    <div className="w-full">
+      <div className="overflow-hidden">
+        <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap w-full ${collapsed ? 'invisible absolute' : ''}`}>
           {roadmapSteps.map((step, i, arr) => {
             const isActive = status === step.key;
             const stepIdx = roadmapOrder.indexOf(step.key);
@@ -543,6 +539,9 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </p>
             )}
           </div>
+          <div className="flex-1 min-w-0">
+            <StatusRoadmap status={localStatus} onStatusChange={handleStatusChange} />
+          </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="w-7 h-7 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0">
@@ -885,8 +884,6 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 <span className="text-xs text-foreground/30 group-hover/cl:text-blue1 transition-colors">Добавить чек-лист</span>
               </button>
             </div>
-
-            <StatusRoadmap status={localStatus} onStatusChange={handleStatusChange} />
 
 
             {checklists.map((cl, clIndex) =>
