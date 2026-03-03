@@ -236,6 +236,10 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
   const resultFileInputRef = useRef<HTMLInputElement>(null);
   const [resultFiles, setResultFiles] = useState<{file: globalThis.File;comment: string;}[]>([]);
 
+  // Help/problem files
+  const helpFileInputRef = useRef<HTMLInputElement>(null);
+  const [helpFiles, setHelpFiles] = useState<{file: globalThis.File;comment: string;}[]>([]);
+
   // Checklists
   const [checklists, setChecklists] = useState<{id: string;title: string;items: {id: string;title: string;assigneeId?: string;files?: {name: string;size: number;}[];}[];}[]>([]);
   const checkItemFileRefs = useRef<Record<string, HTMLInputElement | null>>({});
@@ -1000,7 +1004,49 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </div>
             )}
 
-            {/* Результаты выполнения */}
+            {/* Комментарии к проблеме */}
+            {localStatus === "help" && (
+            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+              <div className="flex items-center gap-2 mb-1.5">
+                <FileText className="w-3.5 h-3.5 text-red-500" />
+                <span className="text-xs font-medium text-red-500">Комментарии к проблеме</span>
+              </div>
+              <textarea
+                placeholder="Опишите проблему, с которой вы столкнулись..."
+                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed" />
+              
+              <div className="mt-1.5 border-t border-foreground/[0.06] pt-1.5">
+                <button onClick={() => helpFileInputRef.current?.click()} className="group/hf flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors">
+                  <Paperclip className="w-3.5 h-3.5 text-muted-foreground group-hover/hf:text-red-500 transition-colors" />
+                  <span className="text-[11px] text-muted-foreground group-hover/hf:text-red-500 transition-colors">Прикрепить файлы</span>
+                </button>
+                <input ref={helpFileInputRef} type="file" multiple className="hidden" onChange={(e) => {
+                  const files = e.target.files ? Array.from(e.target.files) : [];
+                  if (files.length > 0) setHelpFiles((prev) => [...prev, ...files.map((f) => ({ file: f, comment: "" }))]);
+                  e.target.value = "";
+                }} />
+                {helpFiles.length > 0 &&
+                <div className="mt-1.5 space-y-1.5">
+                    {helpFiles.map((item, i) => {
+                    const ext = item.file.name.split(".").pop()?.toLowerCase() || "";
+                    const IconComp = ["jpg", "jpeg", "png", "gif", "webp", "svg", "bmp", "ico"].includes(ext) ? FileImage : ["pdf", "doc", "docx", "txt", "rtf", "odt"].includes(ext) ? FileText : ["xls", "xlsx", "csv"].includes(ext) ? FileSpreadsheet : ["zip", "rar", "7z", "tar", "gz"].includes(ext) ? FileArchive : ["mp4", "avi", "mov", "mkv", "webm"].includes(ext) ? FileVideo : ["mp3", "wav", "ogg", "flac", "aac"].includes(ext) ? FileAudio : File;
+                    const colorClass = ["jpg", "jpeg", "png", "gif", "webp", "svg", "bmp", "ico"].includes(ext) ? "text-green-500" : ["pdf"].includes(ext) ? "text-red-500" : ["doc", "docx", "txt", "rtf", "odt"].includes(ext) ? "text-blue-500" : ["xls", "xlsx", "csv"].includes(ext) ? "text-emerald-600" : ["zip", "rar", "7z", "tar", "gz"].includes(ext) ? "text-amber-500" : ["mp4", "avi", "mov", "mkv", "webm"].includes(ext) ? "text-purple-500" : ["mp3", "wav", "ogg", "flac", "aac"].includes(ext) ? "text-pink-500" : "text-foreground/40";
+                    return (
+                      <div key={i} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-foreground/[0.03]">
+                          <IconComp className={`w-4 h-4 shrink-0 ${colorClass}`} />
+                          <span className="text-xs text-foreground/60 truncate shrink-0 max-w-[120px]">{item.file.name}</span>
+                          <span className="text-foreground/10 shrink-0">·</span>
+                          <input type="text" value={item.comment} onChange={(e) => setHelpFiles((prev) => prev.map((f, idx) => idx === i ? { ...f, comment: e.target.value } : f))} placeholder="Комментарий..." className="flex-1 min-w-0 text-[11px] text-foreground/50 placeholder:text-foreground/20 bg-transparent border-none outline-none" />
+                          <span className="text-[10px] text-foreground/25 shrink-0">{(item.file.size / 1024).toFixed(0)} KB</span>
+                          <button onClick={() => setHelpFiles((prev) => prev.filter((_, idx) => idx !== i))} className="shrink-0 w-4 h-4 flex items-center justify-center rounded-full hover:bg-foreground/[0.08]"><X className="w-3 h-3 text-foreground/30" /></button>
+                        </div>);
+                  })}
+                  </div>
+                }
+              </div>
+            </div>
+            )}
+
             {localStatus === "approval" && <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
                 <FileText className="w-3.5 h-3.5 text-blue1" />
