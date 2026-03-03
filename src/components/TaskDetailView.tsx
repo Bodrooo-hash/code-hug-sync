@@ -107,9 +107,8 @@ const roadmapSteps = [
 ];
 const roadmapOrder = roadmapSteps.map(s => s.key);
 
-const StatusRoadmap = ({ status }: { status: string }) => {
+const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusChange?: (key: string) => void }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const currentIdx = roadmapOrder.indexOf(status);
   const activeStep = roadmapSteps.find(s => s.key === status) || roadmapSteps[0];
@@ -142,12 +141,15 @@ const StatusRoadmap = ({ status }: { status: string }) => {
             const isPassed = currentIdx > stepIdx && currentIdx !== -1;
             return (
               <div key={step.key} className="flex items-center flex-1 min-w-0">
-                <div className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-all w-full ${
-                  isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current/20` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20'
-                }`}>
+                <button
+                  onClick={() => onStatusChange?.(step.key)}
+                  className={`flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all w-full cursor-pointer hover:opacity-80 ${
+                    isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current/20` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 hover:bg-foreground/[0.03]'
+                  }`}
+                >
                   <step.icon className={`w-3 h-3 shrink-0 ${isActive ? '' : isPassed ? 'text-green-500' : ''}`} />
                   <span className={`text-[10px] font-medium truncate ${isActive ? 'font-semibold' : ''}`}>{step.label}</span>
-                </div>
+                </button>
                 {i < arr.length - 1 && (
                   <div className={`w-3 h-px shrink-0 ${isPassed ? 'bg-green-400' : 'bg-foreground/10'}`} />
                 )}
@@ -168,7 +170,11 @@ const StatusRoadmap = ({ status }: { status: string }) => {
               {roadmapSteps.map(step => {
                 const isActive = status === step.key;
                 return (
-                  <button key={step.key} className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}>
+                  <button
+                    key={step.key}
+                    onClick={() => onStatusChange?.(step.key)}
+                    className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}
+                  >
                     <step.icon className="w-3.5 h-3.5 shrink-0" />
                     {step.label}
                   </button>
@@ -816,7 +822,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <StatusRoadmap status={task.status} />
+            <StatusRoadmap status={task.status} onStatusChange={(key) => handleUpdateField("status", key)} />
 
 
             {checklists.map((cl, clIndex) =>
