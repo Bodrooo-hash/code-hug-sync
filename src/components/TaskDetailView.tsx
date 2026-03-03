@@ -586,10 +586,6 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 </div>
               </InfoRow>
 
-              {/* Статус */}
-              <InfoRow label="Статус">
-                <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium ${st.bg} ${st.color}`}>{st.label}</span>
-              </InfoRow>
 
               {/* Крайний срок */}
               <Collapsible>
@@ -711,6 +707,18 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
+            <Collapsible>
+              <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3">
+                <div className="flex items-center gap-3 py-2">
+                  <div className="flex items-center gap-1.5 w-[161px] shrink-0">
+                    <span className="text-xs text-foreground/50 font-medium">Статус</span>
+                  </div>
+                  <div className="flex-1 min-w-0 text-sm flex items-center gap-2">
+                    <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium ${st.bg} ${st.color}`}>{st.label}</span>
+                  </div>
+                </div>
+              </div>
+            </Collapsible>
 
 
             {checklists.map((cl, clIndex) =>
