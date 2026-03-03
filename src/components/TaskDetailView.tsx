@@ -98,6 +98,90 @@ const ChecklistSettingsMenu = ({ onEdit, onCopy, onDelete, onNewChecklist }: {on
     </div>);
 
 };
+const roadmapSteps = [
+  { key: "1", label: "Новая", color: "text-teal-600", bg: "bg-teal-500/15", icon: Sparkles },
+  { key: "3", label: "В работе", color: "text-blue1", bg: "bg-blue1/15", icon: Play },
+  { key: "2", label: "Нужна помощь", color: "text-red-600", bg: "bg-red-500/15", icon: Pause },
+  { key: "4", label: "На согласовании", color: "text-yellow-600", bg: "bg-yellow-500/15", icon: ShieldCheck },
+  { key: "5", label: "Завершена", color: "text-green-600", bg: "bg-green-500/15", icon: CircleCheck },
+];
+const roadmapOrder = roadmapSteps.map(s => s.key);
+
+const StatusRoadmap = ({ status }: { status: string }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
+  const currentIdx = roadmapOrder.indexOf(status);
+  const activeStep = roadmapSteps.find(s => s.key === status) || roadmapSteps[0];
+
+  useEffect(() => {
+    const el = measureRef.current;
+    if (!el) return;
+    const check = () => {
+      const parent = el.parentElement;
+      if (!parent) return;
+      setCollapsed(el.scrollWidth > parent.clientWidth);
+    };
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-3">
+      <div className="flex items-center gap-2 px-2.5 pb-2">
+        <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
+        <span className="text-xs text-foreground/30">Статус</span>
+      </div>
+      <div className="overflow-hidden px-2.5">
+        <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap ${collapsed ? 'invisible absolute' : ''}`}>
+          {roadmapSteps.map((step, i, arr) => {
+            const isActive = status === step.key;
+            const stepIdx = roadmapOrder.indexOf(step.key);
+            const isPassed = currentIdx > stepIdx && currentIdx !== -1;
+            return (
+              <div key={step.key} className="flex items-center flex-1 min-w-0">
+                <div className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-all w-full ${
+                  isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current/20` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20'
+                }`}>
+                  <step.icon className={`w-3 h-3 shrink-0 ${isActive ? '' : isPassed ? 'text-green-500' : ''}`} />
+                  <span className={`text-[10px] font-medium truncate ${isActive ? 'font-semibold' : ''}`}>{step.label}</span>
+                </div>
+                {i < arr.length - 1 && (
+                  <div className={`w-3 h-px shrink-0 ${isPassed ? 'bg-green-400' : 'bg-foreground/10'}`} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+        {collapsed && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold ${activeStep.bg} ${activeStep.color} ring-1 ring-inset ring-current/20 w-full`}>
+                <activeStep.icon className="w-3 h-3 shrink-0" />
+                <span className="truncate">{activeStep.label}</span>
+                <ChevronDown className="w-3 h-3 ml-auto shrink-0 opacity-50" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-48 p-1" align="start">
+              {roadmapSteps.map(step => {
+                const isActive = status === step.key;
+                return (
+                  <button key={step.key} className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}>
+                    <step.icon className="w-3.5 h-3.5 shrink-0" />
+                    {step.label}
+                  </button>
+                );
+              })}
+            </PopoverContent>
+          </Popover>
+        )}
+      </div>
+    </div>
+  );
+};
+
 
 const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Props) => {
   const st = statusConfig[task.status] || statusConfig["6"];
@@ -732,40 +816,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-3">
-              <div className="flex items-center gap-2 px-2.5 pb-2">
-                <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
-                <span className="text-xs text-foreground/30">Статус</span>
-              </div>
-              <div className="flex items-center gap-0 px-2.5">
-                {([
-                  { key: "3", label: "В работе", color: "text-blue-600", bg: "bg-blue-500/15", activeBg: "bg-blue-500", icon: statusConfig["3"].icon },
-                  { key: "2", label: "Нужна помощь", color: "text-yellow-600", bg: "bg-yellow-500/15", activeBg: "bg-yellow-500", icon: statusConfig["2"].icon },
-                  { key: "4", label: "На согласование", color: "text-amber-600", bg: "bg-amber-500/15", activeBg: "bg-amber-500", icon: statusConfig["4"].icon },
-                ] as const).map((step, i, arr) => {
-                  const isActive = task.status === step.key;
-                  const isPassed = (() => {
-                    const order = ["3", "2", "4"];
-                    const currentIdx = order.indexOf(task.status);
-                    const stepIdx = order.indexOf(step.key);
-                    return currentIdx > stepIdx && currentIdx !== -1;
-                  })();
-                  return (
-                    <div key={step.key} className="flex items-center flex-1 min-w-0">
-                      <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg transition-all w-full ${
-                        isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current/20` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20'
-                      }`}>
-                        <step.icon className={`w-3 h-3 shrink-0 ${isActive ? '' : isPassed ? 'text-green-500' : ''}`} />
-                        <span className={`text-[10px] font-medium truncate ${isActive ? 'font-semibold' : ''}`}>{step.label}</span>
-                      </div>
-                      {i < arr.length - 1 && (
-                        <div className={`w-4 h-px shrink-0 ${isPassed ? 'bg-green-400' : 'bg-foreground/10'}`} />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <StatusRoadmap status={task.status} />
 
 
             {checklists.map((cl, clIndex) =>
