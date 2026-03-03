@@ -121,6 +121,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
   const [localTitle, setLocalTitle] = useState(task.title);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [localDescription, setLocalDescription] = useState(task.description || "");
+  const [editingDescription, setEditingDescription] = useState(false);
 
   // Local editable values
   const [localCreatorId, setLocalCreatorId] = useState(task.creator?.id);
@@ -662,14 +663,31 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
             {/* Описание задачи */}
             <div>
-              
-              <div>
-                <RichTextEditor
-                  value={localDescription}
-                  onChange={setLocalDescription}
-                  placeholder="Описание"
-                />
-              </div>
+              {editingDescription ? (
+                <div>
+                  <RichTextEditor
+                    value={localDescription}
+                    onChange={setLocalDescription}
+                    placeholder="Описание"
+                  />
+                  <div className="flex justify-end mt-1.5">
+                    <button
+                      onClick={() => setEditingDescription(false)}
+                      className="text-[11px] text-foreground/40 hover:text-foreground/70 transition-colors px-2 py-1 rounded-md hover:bg-foreground/[0.04]"
+                    >
+                      Свернуть
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setEditingDescription(true)}
+                  className="w-full rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2.5 text-left group/desc flex items-center gap-2 hover:border-foreground/[0.12] transition-colors"
+                >
+                  <div className="flex-1 min-w-0 text-xs text-foreground/60 truncate" dangerouslySetInnerHTML={{ __html: localDescription || '<span class="text-foreground/30">Описание</span>' }} />
+                  <Pencil className="w-3 h-3 text-foreground/20 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
+                </button>
+              )}
             </div>
 
             <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
