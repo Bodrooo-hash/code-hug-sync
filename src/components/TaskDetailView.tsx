@@ -121,7 +121,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
   const [localTitle, setLocalTitle] = useState(task.title);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [localDescription, setLocalDescription] = useState(task.description || "");
-  const [editingDescription, setEditingDescription] = useState(false);
+  const [editingDescription, setEditingDescription] = useState<boolean>(false);
 
   // Local editable values
   const [localCreatorId, setLocalCreatorId] = useState(task.creator?.id);
