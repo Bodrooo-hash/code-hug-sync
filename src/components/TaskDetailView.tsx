@@ -143,7 +143,7 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
               <div key={step.key} className="flex items-center flex-1 min-w-0">
                 <button
                   onClick={() => onStatusChange?.(step.key)}
-                  className={`flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all w-full cursor-pointer hover:opacity-80 ${
+                  className={`flex items-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full cursor-pointer hover:opacity-80 ${
                     isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current/20` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 hover:bg-foreground/[0.03]'
                   }`}
                 >
@@ -822,7 +822,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <StatusRoadmap status={task.status} onStatusChange={(key) => handleUpdateField("status", key)} />
+            <StatusRoadmap status={task.status} onStatusChange={(key) => handleUpdateField("STATUS", key)} />
 
 
             {checklists.map((cl, clIndex) =>
