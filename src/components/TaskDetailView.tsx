@@ -134,7 +134,7 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
         <span className="text-xs text-foreground/30">Статус</span>
       </div>
       <div className="overflow-hidden px-2.5">
-        <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap ${collapsed ? 'invisible absolute' : ''}`}>
+        <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap w-[85%] ${collapsed ? 'invisible absolute' : ''}`}>
           {roadmapSteps.map((step, i, arr) => {
             const isActive = status === step.key;
             const stepIdx = roadmapOrder.indexOf(step.key);
