@@ -563,7 +563,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
         </div>
         <ScrollArea className="flex-1 min-h-0">
           <div className="p-5 space-y-4">
-            <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3">
+            <div className="rounded-xl border border-border bg-card px-3">
               {/* Постановщик */}
               <InfoRow label="Постановщик">
                 <div className="relative">
