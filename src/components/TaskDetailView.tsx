@@ -1003,8 +1003,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             {/* Результаты выполнения */}
             <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
-                <FileText className="w-3.5 h-3.5 text-foreground/40" />
-                <span className="text-xs font-medium text-foreground/60">Финальный результат задачи</span>
+                <FileText className="w-3.5 h-3.5 text-blue1" />
+                <span className="text-xs font-medium text-blue1">Финальный результат задачи</span>
               </div>
               <textarea
 
