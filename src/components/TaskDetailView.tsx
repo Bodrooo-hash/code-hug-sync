@@ -296,15 +296,35 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
     return String(new Date(task.deadline).getMinutes()).padStart(2, "0");
   });
 
-  const [localStatus, setLocalStatus] = useState(task.status);
-
-  // Fetch kanban stages for the group to find "Нужна помощь" stage
+  // Fetch kanban stages for the group
   const [kanbanStages, setKanbanStages] = useState<Record<string, { ID: string; TITLE: string }>>({});
   useEffect(() => {
     if (task.groupId) {
       fetchKanbanStages(Number(task.groupId)).then(setKanbanStages).catch(() => {});
     }
   }, [task.groupId]);
+
+  // Determine initial status from kanban stage
+  const [localStatus, setLocalStatus] = useState(task.status);
+  useEffect(() => {
+    if (task.stageId && Object.keys(kanbanStages).length > 0) {
+      const stage = kanbanStages[task.stageId];
+      if (stage) {
+        const title = stage.TITLE.toLowerCase();
+        if (title.includes("помощь")) {
+          setLocalStatus("help");
+        } else if (title.includes("согласовани")) {
+          setLocalStatus("approval");
+        } else if (title.includes("новые") || title.includes("новая")) {
+          setLocalStatus("1");
+        } else if (title.includes("в работе")) {
+          setLocalStatus("3");
+        } else if (title.includes("заверш")) {
+          setLocalStatus("5");
+        }
+      }
+    }
+  }, [task.stageId, kanbanStages]);
 
   const handleUpdateField = async (field: string, value: unknown) => {
     setSaving(true);

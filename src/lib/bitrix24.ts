@@ -117,6 +117,7 @@ export interface Bitrix24Task {
   title: string;
   status: string;
   priority: string;
+  stageId?: string;
   responsible?: { id: string; name: string; icon?: string };
   deadline?: string;
   createdDate?: string;
@@ -132,7 +133,7 @@ export interface Bitrix24Task {
 export async function fetchGroupTasks(groupId: number): Promise<Bitrix24Task[]> {
   const data = await callBitrix24<{ tasks: Bitrix24Task[] }>("tasks.task.list", {
     filter: { GROUP_ID: groupId },
-    select: ["ID", "TITLE", "STATUS", "PRIORITY", "RESPONSIBLE_ID", "DEADLINE", "CREATED_DATE", "GROUP_ID", "CREATED_BY", "ACCOMPLICES", "AUDITORS", "ACTIVITY_DATE", "DESCRIPTION"],
+    select: ["ID", "TITLE", "STATUS", "PRIORITY", "RESPONSIBLE_ID", "DEADLINE", "CREATED_DATE", "GROUP_ID", "CREATED_BY", "ACCOMPLICES", "AUDITORS", "ACTIVITY_DATE", "DESCRIPTION", "STAGE_ID"],
   });
   return data.tasks || [];
 }
