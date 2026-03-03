@@ -732,19 +732,13 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <Collapsible>
-              <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3">
-                <div className="flex items-center gap-3 py-2">
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <CircleDot className="w-3.5 h-3.5 text-foreground/30" />
-                    <span className="text-xs text-foreground/50 font-medium">Статус</span>
-                  </div>
-                  <div className="flex-1 min-w-0 text-sm flex items-center gap-2">
-                    <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1 ${st.bg} ${st.color}`}><st.icon className="w-3 h-3" />{st.label}</span>
-                  </div>
-                </div>
+            <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
+              <div className="flex items-center gap-2 w-full px-2.5 py-1.5">
+                <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
+                <span className="text-xs text-foreground/30">Статус</span>
+                <span className={`ml-auto text-[11px] px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1 ${st.bg} ${st.color}`}><st.icon className="w-3 h-3" />{st.label}</span>
               </div>
-            </Collapsible>
+            </div>
 
 
             {checklists.map((cl, clIndex) =>
