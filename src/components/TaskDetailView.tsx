@@ -1008,7 +1008,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </div>
               <textarea
 
-                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed" placeholder="\u0422\u044B - \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u043C\u043E\u043B\u043E\u0434\u0435\u0446! \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0444\u0438\u043D\u0430\u043B\u044C\u043D\u043E\u0435 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u043D\u044B\u0445 \u0440\u0430\u0431\u043E\u0442 \u0438 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432..." />
+                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed" placeholder="Ты - молодец! Добавь финальный результат задачи" />
               
               <div className="mt-1.5 border-t border-foreground/[0.06] pt-1.5">
                 <button onClick={() => resultFileInputRef.current?.click()} className="group/rf flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors">
