@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Clock, User, Send, Check, CalendarIcon, X, Paperclip, ListChecks, FileText, FileImage, FileSpreadsheet, FileArchive, FileVideo, FileAudio, File, Plus, Trash2, Settings, Pencil, Copy, MoreVertical, Eye, ChevronDown, Sparkles, Pause, Play, ShieldCheck, CircleCheck, Moon, type LucideIcon } from "lucide-react";
+import { ArrowLeft, Clock, User, Send, Check, CalendarIcon, X, Paperclip, ListChecks, FileText, FileImage, FileSpreadsheet, FileArchive, FileVideo, FileAudio, File, Plus, Trash2, Settings, Pencil, Copy, MoreVertical, Eye, ChevronDown, Sparkles, Pause, Play, ShieldCheck, CircleCheck, Moon, CircleDot, type LucideIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -715,6 +715,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3">
                 <div className="flex items-center gap-3 py-2">
                   <div className="flex items-center gap-1.5 shrink-0">
+                    <CircleDot className="w-3.5 h-3.5 text-foreground/30" />
                     <span className="text-xs text-foreground/50 font-medium">Статус</span>
                   </div>
                   <div className="flex-1 min-w-0 text-sm flex items-center gap-2">
