@@ -166,6 +166,31 @@ export async function updateTask(taskId: string, fields: Record<string, unknown>
   await callBitrix24<unknown>("tasks.task.update", { taskId, fields });
 }
 
+export interface KanbanStage {
+  ID: string;
+  TITLE: string;
+  SORT: string;
+  COLOR: string;
+  SYSTEM_TYPE?: string;
+  ENTITY_ID: string;
+  ENTITY_TYPE: string;
+  ADDITIONAL_FILTER?: unknown[];
+}
+
+export async function fetchKanbanStages(groupId: number): Promise<Record<string, KanbanStage>> {
+  return callBitrix24<Record<string, KanbanStage>>("task.stages.get", {
+    entityId: groupId,
+    isAdmin: false,
+  });
+}
+
+export async function moveTaskToKanbanStage(taskId: string, stageId: string): Promise<void> {
+  await callBitrix24<unknown>("task.stages.movetask", {
+    id: taskId,
+    stageId,
+  });
+}
+
 export async function checkTaskAccess(taskId: string): Promise<Record<string, boolean>> {
   try {
     const result = await callBitrix24<Record<string, boolean>>("tasks.task.getaccess", { taskId });

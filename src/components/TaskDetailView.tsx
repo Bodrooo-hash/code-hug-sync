@@ -9,7 +9,7 @@ import { Calendar as CalendarPicker } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { useBitrix24Profile } from "@/hooks/useBitrix24Profile";
 import type { Bitrix24Task, Bitrix24User } from "@/lib/bitrix24";
-import { updateTask } from "@/lib/bitrix24";
+import { updateTask, fetchKanbanStages, moveTaskToKanbanStage } from "@/lib/bitrix24";
 import { toast } from "sonner";
 import RichTextEditor from "@/components/RichTextEditor";
 
@@ -101,7 +101,7 @@ const ChecklistSettingsMenu = ({ onEdit, onCopy, onDelete, onNewChecklist }: {on
 const roadmapSteps = [
   { key: "1", label: "Новая", color: "text-teal-600", bg: "bg-teal-500/15", icon: Sparkles },
   { key: "3", label: "В работе", color: "text-blue1", bg: "bg-blue1/15", icon: Play },
-  { key: "2", label: "Нужна помощь", color: "text-red-600", bg: "bg-red-500/15", icon: Pause },
+  { key: "help", label: "Нужна помощь", color: "text-red-600", bg: "bg-red-500/15", icon: Pause },
   { key: "4", label: "На согласовании", color: "text-yellow-600", bg: "bg-yellow-500/15", icon: ShieldCheck },
   { key: "5", label: "Завершена", color: "text-green-600", bg: "bg-green-500/15", icon: CircleCheck },
 ];
@@ -298,6 +298,14 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
   const [localStatus, setLocalStatus] = useState(task.status);
 
+  // Fetch kanban stages for the group to find "Нужна помощь" stage
+  const [kanbanStages, setKanbanStages] = useState<Record<string, { ID: string; TITLE: string }>>({});
+  useEffect(() => {
+    if (task.groupId) {
+      fetchKanbanStages(Number(task.groupId)).then(setKanbanStages).catch(() => {});
+    }
+  }, [task.groupId]);
+
   const handleUpdateField = async (field: string, value: unknown) => {
     setSaving(true);
     try {
@@ -310,6 +318,31 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
       toast.error("Нет прав или ошибка: " + (e?.message || "неизвестная ошибка"));
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleStatusChange = async (key: string) => {
+    if (key === "help") {
+      // Find "Нужна помощь" kanban stage
+      const helpStage = Object.values(kanbanStages).find(
+        (s) => s.TITLE?.toLowerCase().includes("нужна помощь") || s.TITLE?.toLowerCase().includes("помощь")
+      );
+      if (!helpStage) {
+        toast.error("Стадия «Нужна помощь» не найдена в канбане этой группы");
+        return;
+      }
+      setSaving(true);
+      try {
+        await moveTaskToKanbanStage(task.id, helpStage.ID);
+        setLocalStatus("help");
+        toast.success("Задача перемещена на стадию «Нужна помощь»");
+      } catch (e: any) {
+        toast.error("Ошибка: " + (e?.message || "неизвестная ошибка"));
+      } finally {
+        setSaving(false);
+      }
+    } else {
+      await handleUpdateField("STATUS", key);
     }
   };
 
@@ -827,7 +860,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <StatusRoadmap status={localStatus} onStatusChange={(key) => handleUpdateField("STATUS", key)} />
+            <StatusRoadmap status={localStatus} onStatusChange={handleStatusChange} />
 
 
             {checklists.map((cl, clIndex) =>
