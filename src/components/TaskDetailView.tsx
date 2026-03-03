@@ -102,7 +102,7 @@ const roadmapSteps = [
   { key: "1", label: "Новая", color: "text-teal-600", bg: "bg-teal-500/15", icon: Sparkles },
   { key: "3", label: "В работе", color: "text-blue1", bg: "bg-blue1/15", icon: Play },
   { key: "help", label: "Нужна помощь", color: "text-red-600", bg: "bg-red-500/15", icon: Pause },
-  { key: "4", label: "На согласовании", color: "text-yellow-600", bg: "bg-yellow-500/15", icon: ShieldCheck },
+  { key: "approval", label: "На согласовании", color: "text-yellow-600", bg: "bg-yellow-500/15", icon: ShieldCheck },
   { key: "5", label: "Завершена", color: "text-green-600", bg: "bg-green-500/15", icon: CircleCheck },
 ];
 const roadmapOrder = roadmapSteps.map(s => s.key);
@@ -322,20 +322,25 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
   };
 
   const handleStatusChange = async (key: string) => {
-    if (key === "help") {
-      // Find "Нужна помощь" kanban stage
-      const helpStage = Object.values(kanbanStages).find(
-        (s) => s.TITLE?.toLowerCase().includes("нужна помощь") || s.TITLE?.toLowerCase().includes("помощь")
+    const kanbanKeys: Record<string, string> = {
+      help: "помощь",
+      approval: "согласовани",
+    };
+
+    if (kanbanKeys[key]) {
+      const searchTerm = kanbanKeys[key];
+      const stage = Object.values(kanbanStages).find(
+        (s) => s.TITLE?.toLowerCase().includes(searchTerm)
       );
-      if (!helpStage) {
-        toast.error("Стадия «Нужна помощь» не найдена в канбане этой группы");
+      if (!stage) {
+        toast.error(`Стадия не найдена в канбане этой группы`);
         return;
       }
       setSaving(true);
       try {
-        await moveTaskToKanbanStage(task.id, helpStage.ID);
-        setLocalStatus("help");
-        toast.success("Задача перемещена на стадию «Нужна помощь»");
+        await moveTaskToKanbanStage(task.id, stage.ID);
+        setLocalStatus(key);
+        toast.success(`Задача перемещена на стадию «${stage.TITLE}»`);
       } catch (e: any) {
         toast.error("Ошибка: " + (e?.message || "неизвестная ошибка"));
       } finally {
