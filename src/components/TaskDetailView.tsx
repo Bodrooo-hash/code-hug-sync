@@ -732,11 +732,38 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
-              <div className="flex items-center gap-2 w-full px-2.5 py-1.5">
+            <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-3">
+              <div className="flex items-center gap-2 px-2.5 pb-2">
                 <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
                 <span className="text-xs text-foreground/30">Статус</span>
-                <span className={`ml-[5%] text-[11px] px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1 ${st.bg} ${st.color}`}><st.icon className="w-3 h-3" />{st.label}</span>
+              </div>
+              <div className="flex items-center gap-0 px-2.5">
+                {([
+                  { key: "3", label: "В работе", color: "text-blue-600", bg: "bg-blue-500/15", activeBg: "bg-blue-500", icon: statusConfig["3"].icon },
+                  { key: "2", label: "Нужна помощь", color: "text-yellow-600", bg: "bg-yellow-500/15", activeBg: "bg-yellow-500", icon: statusConfig["2"].icon },
+                  { key: "4", label: "На согласование", color: "text-amber-600", bg: "bg-amber-500/15", activeBg: "bg-amber-500", icon: statusConfig["4"].icon },
+                ] as const).map((step, i, arr) => {
+                  const isActive = task.status === step.key;
+                  const isPassed = (() => {
+                    const order = ["3", "2", "4"];
+                    const currentIdx = order.indexOf(task.status);
+                    const stepIdx = order.indexOf(step.key);
+                    return currentIdx > stepIdx && currentIdx !== -1;
+                  })();
+                  return (
+                    <div key={step.key} className="flex items-center flex-1 min-w-0">
+                      <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg transition-all w-full ${
+                        isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current/20` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20'
+                      }`}>
+                        <step.icon className={`w-3 h-3 shrink-0 ${isActive ? '' : isPassed ? 'text-green-500' : ''}`} />
+                        <span className={`text-[10px] font-medium truncate ${isActive ? 'font-semibold' : ''}`}>{step.label}</span>
+                      </div>
+                      {i < arr.length - 1 && (
+                        <div className={`w-4 h-px shrink-0 ${isPassed ? 'bg-green-400' : 'bg-foreground/10'}`} />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
