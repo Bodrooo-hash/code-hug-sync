@@ -763,6 +763,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                                 {localDeadline ? formatDate(localDeadline.toISOString()) : "—"}
                               </span>
 {localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={overdue ? "text-red-500 font-medium" : ""}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
+{localDeadline && (() => {const now = new Date();const diff = Math.ceil((localDeadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));if (diff < 0) return <span className="text-red-500 text-[10px] ml-1">(просрочено на {Math.abs(diff)} дн.)</span>;if (diff === 0) return <span className="text-yellow-500 text-[10px] ml-1">(сегодня)</span>;const dLabel = diff === 1 ? "день" : diff < 5 ? "дня" : "дней";return <span className="text-foreground/40 text-[10px] ml-1">(осталось {diff} {dLabel})</span>;})()}
                             </div>
                           </PopoverTrigger>
                           <PopoverContent className="w-auto p-0" align="start">
