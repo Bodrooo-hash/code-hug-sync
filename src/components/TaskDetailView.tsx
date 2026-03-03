@@ -714,7 +714,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             <Collapsible>
               <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3">
                 <div className="flex items-center gap-3 py-2">
-                  <div className="flex items-center gap-1.5 w-[161px] shrink-0">
+                  <div className="flex items-center gap-1.5 shrink-0">
                     <span className="text-xs text-foreground/50 font-medium">Статус</span>
                   </div>
                   <div className="flex-1 min-w-0 text-sm flex items-center gap-2">
