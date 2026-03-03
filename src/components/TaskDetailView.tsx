@@ -99,19 +99,19 @@ const ChecklistSettingsMenu = ({ onEdit, onCopy, onDelete, onNewChecklist }: {on
 
 };
 const roadmapSteps = [
-  { key: "new", label: "Новая", color: "text-teal-600", bg: "bg-teal-500/15", icon: Sparkles },
-  { key: "inwork", label: "В работе", color: "text-blue1", bg: "bg-blue1/15", icon: Play },
-  { key: "help", label: "Нужна помощь", color: "text-red-600", bg: "bg-red-500/15", icon: Pause },
-  { key: "approval", label: "На согласовании", color: "text-yellow-600", bg: "bg-yellow-500/15", icon: ShieldCheck },
-  { key: "done", label: "Завершена", color: "text-green-600", bg: "bg-green-500/15", icon: CircleCheck },
-];
-const roadmapOrder = roadmapSteps.map(s => s.key);
+{ key: "new", label: "Новая", color: "text-teal-600", bg: "bg-teal-500/15", icon: Sparkles },
+{ key: "inwork", label: "В работе", color: "text-blue1", bg: "bg-blue1/15", icon: Play },
+{ key: "help", label: "Нужна помощь", color: "text-red-600", bg: "bg-red-500/15", icon: Pause },
+{ key: "approval", label: "На согласовании", color: "text-yellow-600", bg: "bg-yellow-500/15", icon: ShieldCheck },
+{ key: "done", label: "Завершена", color: "text-green-600", bg: "bg-green-500/15", icon: CircleCheck }];
 
-const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusChange?: (key: string) => void }) => {
+const roadmapOrder = roadmapSteps.map((s) => s.key);
+
+const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChange?: (key: string) => void;}) => {
   const [collapsed, setCollapsed] = useState(false);
   const measureRef = useRef<HTMLDivElement>(null);
   const currentIdx = roadmapOrder.indexOf(status);
-  const activeStep = roadmapSteps.find(s => s.key === status) || roadmapSteps[0];
+  const activeStep = roadmapSteps.find((s) => s.key === status) || roadmapSteps[0];
 
   useEffect(() => {
     const el = measureRef.current;
@@ -131,7 +131,7 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
     <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-3">
       <div className="flex items-center gap-2 px-2.5">
         <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
-        <span className="text-xs text-foreground/30 shrink-0">Статус</span>
+        <span className="text-xs text-foreground/30 shrink-0">Статус:</span>
         <div className="overflow-hidden flex-1 min-w-0">
           <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap w-[75%] ${collapsed ? 'invisible absolute' : ''}`}>
             {roadmapSteps.map((step, i, arr) => {
@@ -143,21 +143,21 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
                   <button
                     onClick={() => onStatusChange?.(step.key)}
                     className={`flex items-center justify-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full cursor-pointer hover:opacity-80 ${
-                      isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'
-                    }`}
-                  >
+                    isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'}`
+                    }>
+                    
                     <step.icon className="w-3 h-3 shrink-0" />
                     <span className={`text-[10px] font-medium truncate ${isActive ? 'font-semibold' : ''}`}>{step.label}</span>
                   </button>
-                  {i < arr.length - 1 && (
-                    <div className="w-3 h-px shrink-0 bg-foreground/10" />
-                  )}
-                </div>
-              );
+                  {i < arr.length - 1 &&
+                  <div className="w-3 h-px shrink-0 bg-foreground/10" />
+                  }
+                </div>);
+
             })}
           </div>
-          {collapsed && (
-            <Popover>
+          {collapsed &&
+          <Popover>
               <PopoverTrigger asChild>
                 <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold ${activeStep.bg} ${activeStep.color} ring-1 ring-inset ring-current/20 w-full`}>
                   <activeStep.icon className="w-3 h-3 shrink-0" />
@@ -166,26 +166,26 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
                 </button>
               </PopoverTrigger>
               <PopoverContent className="w-48 p-1" align="start">
-                {roadmapSteps.map(step => {
-                  const isActive = status === step.key;
-                  return (
-                    <button
-                      key={step.key}
-                      onClick={() => onStatusChange?.(step.key)}
-                      className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}
-                    >
+                {roadmapSteps.map((step) => {
+                const isActive = status === step.key;
+                return (
+                  <button
+                    key={step.key}
+                    onClick={() => onStatusChange?.(step.key)}
+                    className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}>
+                    
                       <step.icon className="w-3.5 h-3.5 shrink-0" />
                       {step.label}
-                    </button>
-                  );
-                })}
+                    </button>);
+
+              })}
               </PopoverContent>
             </Popover>
-          )}
+          }
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 
@@ -297,7 +297,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
   });
 
   // Fetch kanban stages for the group
-  const [kanbanStages, setKanbanStages] = useState<Record<string, { ID: string; TITLE: string }>>({});
+  const [kanbanStages, setKanbanStages] = useState<Record<string, {ID: string;TITLE: string;}>>({});
   useEffect(() => {
     if (task.groupId) {
       fetchKanbanStages(Number(task.groupId)).then(setKanbanStages).catch(() => {});
@@ -347,7 +347,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
       inwork: "в работе",
       help: "помощь",
       approval: "согласовани",
-      done: "заверш",
+      done: "заверш"
     };
 
     const searchTerm = kanbanKeys[key];
@@ -520,28 +520,28 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 contentEditable={editingTitle}
                 suppressContentEditableWarning
                 onInput={(e) => setLocalTitle((e.target as HTMLElement).textContent || "")}
-                onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleSaveTitle(); } if (e.key === "Escape") { if (titleRef.current) titleRef.current.textContent = task.title; setLocalTitle(task.title); setEditingTitle(false); } }}
+                onKeyDown={(e) => {if (e.key === "Enter") {e.preventDefault();handleSaveTitle();}if (e.key === "Escape") {if (titleRef.current) titleRef.current.textContent = task.title;setLocalTitle(task.title);setEditingTitle(false);}}}
                 className={cn(
                   "text-base font-semibold truncate text-foreground outline-none",
                   editingTitle && "border-b border-primary truncate-none"
-                )}
-              >
+                )}>
+                
                 {task.title}
               </h2>
-              {editingTitle && (
-                <button
-                  onClick={handleSaveTitle}
-                  className="w-5 h-5 rounded-full bg-blue1 flex items-center justify-center shrink-0 hover:bg-blue1/80 transition-colors"
-                >
+              {editingTitle &&
+              <button
+                onClick={handleSaveTitle}
+                className="w-5 h-5 rounded-full bg-blue1 flex items-center justify-center shrink-0 hover:bg-blue1/80 transition-colors">
+                
                   <Check className="w-3 h-3 text-white" />
                 </button>
-              )}
+              }
             </div>
-            {(sectionName || projectName) && (
-              <p className="text-xs text-muted-foreground truncate mt-0.5">
+            {(sectionName || projectName) &&
+            <p className="text-xs text-muted-foreground truncate mt-0.5">
                 {sectionName}{sectionName && projectName ? " / " : ""}{projectName}
               </p>
-            )}
+            }
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -550,7 +550,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-[180px]">
-              <DropdownMenuItem onClick={() => { setEditingTitle(true); setTimeout(() => { if (titleRef.current) { titleRef.current.focus(); const range = document.createRange(); range.selectNodeContents(titleRef.current); const sel = window.getSelection(); sel?.removeAllRanges(); sel?.addRange(range); } }, 50); }}>
+              <DropdownMenuItem onClick={() => {setEditingTitle(true);setTimeout(() => {if (titleRef.current) {titleRef.current.focus();const range = document.createRange();range.selectNodeContents(titleRef.current);const sel = window.getSelection();sel?.removeAllRanges();sel?.addRange(range);}}, 50);}}>
                 <Pencil className="w-4 h-4 mr-2" />
                 Изменить название
               </DropdownMenuItem>
@@ -822,28 +822,28 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
             {/* Описание задачи */}
             <div>
-              {editingDescription ? (
-                <div>
+              {editingDescription ?
+              <div>
                   <RichTextEditor
-                    value={localDescription}
-                    onChange={setLocalDescription}
-                    placeholder="Описание"
-                  />
+                  value={localDescription}
+                  onChange={setLocalDescription}
+                  placeholder="Описание" />
+                
                   <div className="flex justify-end mt-1.5">
                     <button
-                      onClick={() => setEditingDescription(false)}
-                      className="text-[11px] text-foreground/40 hover:text-foreground/70 transition-colors px-2 py-1 rounded-md hover:bg-foreground/[0.04]"
-                    >
+                    onClick={() => setEditingDescription(false)}
+                    className="text-[11px] text-foreground/40 hover:text-foreground/70 transition-colors px-2 py-1 rounded-md hover:bg-foreground/[0.04]">
+                    
                       Свернуть
                     </button>
                   </div>
-                </div>
-              ) : (
-                <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
+                </div> :
+
+              <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
                   <button
-                    onClick={() => setEditingDescription(true)}
-                    className="group/desc flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors"
-                  >
+                  onClick={() => setEditingDescription(true)}
+                  className="group/desc flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
+                  
                     <FileText className="w-4 h-4 text-foreground/30 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
                     <div className="flex items-center gap-1.5 min-w-0 text-xs text-foreground/30 group-hover/desc:text-foreground/50 truncate text-left transition-colors">
                       <span dangerouslySetInnerHTML={{ __html: localDescription || 'Описание' }} />
@@ -851,7 +851,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                     </div>
                   </button>
                 </div>
-              )}
+              }
             </div>
 
             <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
@@ -1008,8 +1008,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </div>
               <textarea
                 placeholder="Вы - большой молодец! Добавьте финальное описание выполненных работ и результатов..."
-                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed"
-              />
+                className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed" />
+              
               <div className="mt-1.5 border-t border-foreground/[0.06] pt-1.5">
                 <button onClick={() => resultFileInputRef.current?.click()} className="group/rf flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors">
                   <Paperclip className="w-3.5 h-3.5 text-foreground/30 group-hover/rf:text-blue1 transition-colors" />
