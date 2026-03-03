@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Clock, User, Send, Check, CalendarIcon, X, Paperclip, ListChecks, FileText, FileImage, FileSpreadsheet, FileArchive, FileVideo, FileAudio, File, Plus, Trash2, Settings, Pencil, Copy, MoreVertical, Eye, ChevronDown } from "lucide-react";
+import { ArrowLeft, Clock, User, Send, Check, CalendarIcon, X, Paperclip, ListChecks, FileText, FileImage, FileSpreadsheet, FileArchive, FileVideo, FileAudio, File, Plus, Trash2, Settings, Pencil, Copy, MoreVertical, Eye, ChevronDown, Sparkles, Pause, Play, ShieldCheck, CircleCheck, Moon, type LucideIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -21,13 +21,13 @@ interface Props {
   onBack: () => void;
 }
 
-const statusConfig: Record<string, {label: string;color: string;bg: string;}> = {
-  "1": { label: "Новая", color: "text-teal-600", bg: "bg-teal-500/10" },
-  "2": { label: "Ожидает", color: "text-yellow-600", bg: "bg-yellow-500/10" },
-  "3": { label: "В работе", color: "text-blue-600", bg: "bg-blue-500/10" },
-  "4": { label: "На согласовании", color: "text-amber-600", bg: "bg-amber-500/10" },
-  "5": { label: "Завершена", color: "text-green-600", bg: "bg-green-500/10" },
-  "6": { label: "Отложена", color: "text-muted-foreground", bg: "bg-muted" }
+const statusConfig: Record<string, {label: string;color: string;bg: string;icon: LucideIcon;}> = {
+  "1": { label: "Новая", color: "text-teal-600", bg: "bg-teal-500/10", icon: Sparkles },
+  "2": { label: "Ожидает", color: "text-yellow-600", bg: "bg-yellow-500/10", icon: Pause },
+  "3": { label: "В работе", color: "text-blue-600", bg: "bg-blue-500/10", icon: Play },
+  "4": { label: "На согласовании", color: "text-amber-600", bg: "bg-amber-500/10", icon: ShieldCheck },
+  "5": { label: "Завершена", color: "text-green-600", bg: "bg-green-500/10", icon: CircleCheck },
+  "6": { label: "Отложена", color: "text-muted-foreground", bg: "bg-muted", icon: Moon }
 };
 
 const priorityConfig: Record<string, {label: string;color: string;}> = {
@@ -718,7 +718,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                     <span className="text-xs text-foreground/50 font-medium">Статус</span>
                   </div>
                   <div className="flex-1 min-w-0 text-sm flex items-center gap-2">
-                    <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium ${st.bg} ${st.color}`}>{st.label}</span>
+                    <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1 ${st.bg} ${st.color}`}><st.icon className="w-3 h-3" />{st.label}</span>
                   </div>
                 </div>
               </div>
