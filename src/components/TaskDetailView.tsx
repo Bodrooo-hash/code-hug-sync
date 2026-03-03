@@ -128,10 +128,10 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
   }, []);
 
   return (
-    <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-3">
+    <div className="rounded-xl border border-border bg-muted/50 px-3 py-3">
       <div className="flex items-center gap-2 px-2.5">
-        <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
-        <span className="text-xs text-foreground/30 shrink-0">Статус:</span>
+        <CircleDot className="w-4 h-4 text-muted-foreground shrink-0" />
+        <span className="text-xs text-muted-foreground shrink-0">Статус:</span>
         <div className="overflow-hidden flex-1 min-w-0">
           <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap w-[75%] ${collapsed ? 'invisible absolute' : ''}`}>
             {roadmapSteps.map((step, i, arr) => {
@@ -643,8 +643,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                         </div> :
 
                       <div className={cn("flex items-center gap-2 group/pick", !canEdit && "pointer-events-none opacity-60")}>
-                          <User className="w-4 h-4 text-foreground/30 group-hover/pick:text-ring transition-colors" />
-                          <span className="text-xs text-foreground/30 group-hover/pick:text-ring transition-colors">Выбрать</span>
+                          <User className="w-4 h-4 text-muted-foreground group-hover/pick:text-ring transition-colors" />
+                          <span className="text-xs text-muted-foreground group-hover/pick:text-ring transition-colors">Выбрать</span>
                         </div>;
 
                     })()}
@@ -710,8 +710,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                         </div> :
 
                       <div className={cn("flex items-center gap-2 group/pick", !canEdit && "pointer-events-none opacity-60")}>
-                          <User className="w-4 h-4 text-foreground/30 group-hover/pick:text-ring transition-colors" />
-                          <span className="text-xs text-foreground/30 group-hover/pick:text-ring transition-colors">Выбрать</span>
+                          <User className="w-4 h-4 text-muted-foreground group-hover/pick:text-ring transition-colors" />
+                          <span className="text-xs text-muted-foreground group-hover/pick:text-ring transition-colors">Выбрать</span>
                         </div>;
 
                     })()}
@@ -757,7 +757,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                       <Popover open={editingDeadline} onOpenChange={(v) => {if (!v) handleSaveDeadline();setEditingDeadline(v);}}>
                           <PopoverTrigger asChild>
                             <div className="flex items-center gap-1 cursor-pointer hover:text-blue1 transition-colors text-xs">
-                              <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
+                              <CalendarIcon className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                               <span className={overdue ? "text-red-500 font-medium" : ""}>
                                 {overdue && <Clock className="w-3 h-3 inline mr-1" />}
                                 {localDeadline ? formatDate(localDeadline.toISOString()) : "—"}
@@ -766,7 +766,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 {localDeadline && (() => {const now = new Date();const diff = Math.ceil((localDeadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));if (diff < 0) return <span className="text-red-500 text-[10px] ml-1">(срок сдачи просрочен)</span>;if (diff === 0) return <span className="text-yellow-500 text-[10px] ml-1">(сегодня)</span>;const dLabel = diff === 1 ? "день" : diff < 5 ? "дня" : "дней";const colorClass = diff <= 3 ? "text-yellow-500" : "text-foreground/40";return <span className={`${colorClass} text-[10px] ml-1`}>(осталось {diff} {dLabel})</span>;})()}
                               <CollapsibleTrigger asChild>
                                 <button className="w-5 h-5 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0 ml-1" onClick={(e) => e.stopPropagation()}>
-                                  <ChevronDown className="w-3.5 h-3.5 text-foreground/30 transition-transform duration-200 [[data-state=open]>button>&]:rotate-180" />
+                                  <ChevronDown className="w-3.5 h-3.5 text-muted-foreground transition-transform duration-200 [[data-state=open]>button>&]:rotate-180" />
                                 </button>
                               </CollapsibleTrigger>
                             </div>
@@ -839,25 +839,25 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                   </div>
                 </div> :
 
-              <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
+              <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
                   <button
                   onClick={() => setEditingDescription(true)}
                   className="group/desc flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
                   
-                    <FileText className="w-4 h-4 text-foreground/30 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
-                    <div className="flex items-center gap-1.5 min-w-0 text-xs text-foreground/30 group-hover/desc:text-foreground/50 truncate text-left transition-colors">
+                    <FileText className="w-4 h-4 text-muted-foreground group-hover/desc:text-foreground/50 transition-colors shrink-0" />
+                    <div className="flex items-center gap-1.5 min-w-0 text-xs text-muted-foreground group-hover/desc:text-foreground/50 truncate text-left transition-colors">
                       <span dangerouslySetInnerHTML={{ __html: localDescription || 'Описание' }} />
-                      <Pencil className="w-3 h-3 text-foreground/20 group-hover/desc:text-foreground/50 transition-colors shrink-0 ml-3" />
+                      <Pencil className="w-3 h-3 text-muted-foreground/50 group-hover/desc:text-foreground/50 transition-colors shrink-0 ml-3" />
                     </div>
                   </button>
                 </div>
               }
             </div>
 
-            <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
+            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
               <button onClick={() => fileInputRef.current?.click()} className="group/file flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
-                <Paperclip className="w-4 h-4 text-foreground/30 group-hover/file:text-blue1 transition-colors" />
-                <span className="text-xs text-foreground/30 group-hover/file:text-blue1 transition-colors">Добавить файлы</span>
+                <Paperclip className="w-4 h-4 text-muted-foreground group-hover/file:text-blue1 transition-colors" />
+                <span className="text-xs text-muted-foreground group-hover/file:text-blue1 transition-colors">Добавить файлы</span>
               </button>
               <input ref={fileInputRef} type="file" multiple className="hidden" onChange={(e) => {
                 const files = e.target.files ? Array.from(e.target.files) : [];
@@ -885,11 +885,11 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               }
             </div>
 
-            <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
+            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
               <button onClick={() => {const newId = crypto.randomUUID();setChecklists((prev) => [...prev, { id: newId, title: "Чек-лист", items: [] }]);setActiveChecklistId(newId);}}
               className="group/cl flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
-                <ListChecks className="w-4 h-4 text-foreground/30 group-hover/cl:text-blue1 transition-colors" />
-                <span className="text-xs text-foreground/30 group-hover/cl:text-blue1 transition-colors">Добавить чек-лист</span>
+                <ListChecks className="w-4 h-4 text-muted-foreground group-hover/cl:text-blue1 transition-colors" />
+                <span className="text-xs text-muted-foreground group-hover/cl:text-blue1 transition-colors">Добавить чек-лист</span>
               </button>
             </div>
 
@@ -897,7 +897,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
 
             {checklists.map((cl, clIndex) =>
-            <div key={cl.id} className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
+            <div key={cl.id} className="rounded-xl border border-border bg-muted/50 px-3 py-2">
                 <div className="flex items-center gap-1.5 mb-1">
                   <ListChecks className="w-3.5 h-3.5 text-muted-foreground" />
                   {activeChecklistId === cl.id ?
@@ -1001,7 +1001,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             )}
 
             {/* Результаты выполнения */}
-            <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2">
+            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
                 <FileText className="w-3.5 h-3.5 text-foreground/40" />
                 <span className="text-xs font-medium text-foreground/60">Финальный результат задачи</span>
@@ -1012,8 +1012,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               
               <div className="mt-1.5 border-t border-foreground/[0.06] pt-1.5">
                 <button onClick={() => resultFileInputRef.current?.click()} className="group/rf flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors">
-                  <Paperclip className="w-3.5 h-3.5 text-foreground/30 group-hover/rf:text-blue1 transition-colors" />
-                  <span className="text-[11px] text-foreground/30 group-hover/rf:text-blue1 transition-colors">Прикрепить файлы</span>
+                  <Paperclip className="w-3.5 h-3.5 text-muted-foreground group-hover/rf:text-blue1 transition-colors" />
+                  <span className="text-[11px] text-muted-foreground group-hover/rf:text-blue1 transition-colors">Прикрепить файлы</span>
                 </button>
                 <input ref={resultFileInputRef} type="file" multiple className="hidden" onChange={(e) => {
                   const files = e.target.files ? Array.from(e.target.files) : [];
