@@ -764,6 +764,11 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                               </span>
 {localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={overdue ? "text-red-500 font-medium" : ""}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
 {localDeadline && (() => {const now = new Date();const diff = Math.ceil((localDeadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));if (diff < 0) return <span className="text-red-500 text-[10px] ml-1">(просрочено на {Math.abs(diff)} дн.)</span>;if (diff === 0) return <span className="text-yellow-500 text-[10px] ml-1">(сегодня)</span>;const dLabel = diff === 1 ? "день" : diff < 5 ? "дня" : "дней";return <span className="text-foreground/40 text-[10px] ml-1">(осталось {diff} {dLabel})</span>;})()}
+                              <CollapsibleTrigger asChild>
+                                <button className="w-5 h-5 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0 ml-1" onClick={(e) => e.stopPropagation()}>
+                                  <ChevronDown className="w-3.5 h-3.5 text-foreground/30 transition-transform duration-200 [[data-state=open]>button>&]:rotate-180" />
+                                </button>
+                              </CollapsibleTrigger>
                             </div>
                           </PopoverTrigger>
                           <PopoverContent className="w-auto p-0" align="start">
@@ -787,14 +792,14 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                             {formatDate(deadlineDateStr)}
                           </span>
                           {localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={overdue ? "text-red-500 font-medium" : ""}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
+                          <CollapsibleTrigger asChild>
+                            <button className="w-5 h-5 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0 ml-1">
+                              <ChevronDown className="w-3.5 h-3.5 text-foreground/30 transition-transform duration-200 [[data-state=open]>button>&]:rotate-180" />
+                            </button>
+                          </CollapsibleTrigger>
                         </div>
                       }
                     </div>
-                    <CollapsibleTrigger asChild>
-                      <button className="w-5 h-5 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0">
-                        <ChevronDown className="w-3.5 h-3.5 text-foreground/30 transition-transform duration-200 [[data-state=open]>button>&]:rotate-180" />
-                      </button>
-                    </CollapsibleTrigger>
                   </div>
                 </div>
                 <CollapsibleContent>
