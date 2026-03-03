@@ -296,10 +296,15 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
     return String(new Date(task.deadline).getMinutes()).padStart(2, "0");
   });
 
+  const [localStatus, setLocalStatus] = useState(task.status);
+
   const handleUpdateField = async (field: string, value: unknown) => {
     setSaving(true);
     try {
       await updateTask(task.id, { [field]: value });
+      if (field === "STATUS") {
+        setLocalStatus(String(value));
+      }
       toast.success("Задача обновлена");
     } catch (e: any) {
       toast.error("Нет прав или ошибка: " + (e?.message || "неизвестная ошибка"));
@@ -822,7 +827,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <StatusRoadmap status={task.status} onStatusChange={(key) => handleUpdateField("STATUS", key)} />
+            <StatusRoadmap status={localStatus} onStatusChange={(key) => handleUpdateField("STATUS", key)} />
 
 
             {checklists.map((cl, clIndex) =>
