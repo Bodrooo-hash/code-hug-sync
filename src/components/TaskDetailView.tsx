@@ -587,47 +587,75 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </InfoRow>
 
               {/* Крайний срок */}
-              <InfoRow label="Крайний срок">
-                <div className="relative">
-                  {canEdit ?
-                  <Popover open={editingDeadline} onOpenChange={(v) => {if (!v) handleSaveDeadline();setEditingDeadline(v);}}>
-                      <PopoverTrigger asChild>
-                        <div className="flex items-center gap-2 cursor-pointer hover:text-blue1 transition-colors text-xs">
+              <Collapsible>
+                <div className="flex items-center gap-3 py-2">
+                  <div className="flex items-center gap-1.5 w-[161px] shrink-0">
+                    <span className="text-xs text-foreground/50 font-medium">Крайний срок</span>
+                  </div>
+                  <div className="flex-1 min-w-0 text-sm flex items-center gap-2">
+                    <div className="relative flex-1">
+                      {canEdit ?
+                      <Popover open={editingDeadline} onOpenChange={(v) => {if (!v) handleSaveDeadline();setEditingDeadline(v);}}>
+                          <PopoverTrigger asChild>
+                            <div className="flex items-center gap-2 cursor-pointer hover:text-blue1 transition-colors text-xs">
+                              <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
+                              <span className={overdue ? "text-red-500 font-medium" : ""}>
+                                {overdue && <Clock className="w-3 h-3 inline mr-1" />}
+                                {localDeadline ? formatDate(localDeadline.toISOString()) : "—"}
+                              </span>
+{localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={overdue ? "text-red-500 font-medium" : ""}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
+                            </div>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <CalendarPicker mode="single" selected={localDeadline} onSelect={setLocalDeadline} initialFocus className={cn("p-3 pointer-events-auto")} />
+                            <div className="flex items-center gap-2 px-3 pb-3 border-t border-border pt-2">
+                              <span className="text-xs text-muted-foreground">Время:</span>
+                              <select value={deadlineHour} onChange={(e) => setDeadlineHour(e.target.value)} className="h-7 rounded-md border border-border bg-muted/50 px-1.5 text-xs text-foreground outline-none focus:ring-1 focus:ring-ring">
+                                {Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0")).map((h) => <option key={h} value={h}>{h}</option>)}
+                              </select>
+                              <span className="text-xs text-muted-foreground">:</span>
+                              <select value={deadlineMinute} onChange={(e) => setDeadlineMinute(e.target.value)} className="h-7 rounded-md border border-border bg-muted/50 px-1.5 text-xs text-foreground outline-none focus:ring-1 focus:ring-ring">
+                                {["00", "15", "30", "45"].map((m) => <option key={m} value={m}>{m}</option>)}
+                              </select>
+                            </div>
+                          </PopoverContent>
+                        </Popover> :
+                      <div className="flex items-center gap-2">
                           <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
                           <span className={overdue ? "text-red-500 font-medium" : ""}>
                             {overdue && <Clock className="w-3 h-3 inline mr-1" />}
-                            {localDeadline ? formatDate(localDeadline.toISOString()) : "—"}
+                            {formatDate(deadlineDateStr)}
                           </span>
-{localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={overdue ? "text-red-500 font-medium" : ""}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
-                          
+                          {localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={overdue ? "text-red-500 font-medium" : ""}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
                         </div>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <CalendarPicker mode="single" selected={localDeadline} onSelect={setLocalDeadline} initialFocus className={cn("p-3 pointer-events-auto")} />
-                        <div className="flex items-center gap-2 px-3 pb-3 border-t border-border pt-2">
-                          <span className="text-xs text-muted-foreground">Время:</span>
-                          <select value={deadlineHour} onChange={(e) => setDeadlineHour(e.target.value)} className="h-7 rounded-md border border-border bg-muted/50 px-1.5 text-xs text-foreground outline-none focus:ring-1 focus:ring-ring">
-                            {Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0")).map((h) => <option key={h} value={h}>{h}</option>)}
-                          </select>
-                          <span className="text-xs text-muted-foreground">:</span>
-                          <select value={deadlineMinute} onChange={(e) => setDeadlineMinute(e.target.value)} className="h-7 rounded-md border border-border bg-muted/50 px-1.5 text-xs text-foreground outline-none focus:ring-1 focus:ring-ring">
-                            {["00", "15", "30", "45"].map((m) => <option key={m} value={m}>{m}</option>)}
-                          </select>
-                        </div>
-                      </PopoverContent>
-                    </Popover> :
-
-                  <div className="flex items-center gap-2">
-                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
-                      <span className={overdue ? "text-red-500 font-medium" : ""}>
-                        {overdue && <Clock className="w-3 h-3 inline mr-1" />}
-                        {formatDate(deadlineDateStr)}
-                      </span>
-                      {localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={overdue ? "text-red-500 font-medium" : ""}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
+                      }
                     </div>
-                  }
+                    <CollapsibleTrigger asChild>
+                      <button className="w-5 h-5 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0">
+                        <ChevronDown className="w-3.5 h-3.5 text-foreground/30 transition-transform duration-200 [[data-state=open]>button>&]:rotate-180" />
+                      </button>
+                    </CollapsibleTrigger>
+                  </div>
                 </div>
-              </InfoRow>
+                <CollapsibleContent>
+                  {/* Статус */}
+                  <InfoRow label="Статус">
+                    <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium ${st.bg} ${st.color}`}>{st.label}</span>
+                  </InfoRow>
+                  <InfoRow label="Дата создания">
+                    <div className="flex items-center gap-1.5">
+                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/40" />
+                      <span className="text-xs">
+                        {task.createdDate ? (() => {
+                          const d = new Date(task.createdDate);
+                          return `${d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" })} ${d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}`;
+                        })() : "—"}
+                      </span>
+                      <span className="text-[11px] text-muted-foreground/50">ID {task.id}</span>
+                    </div>
+                  </InfoRow>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
 
 
@@ -682,39 +710,6 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <Collapsible>
-              <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3">
-                {/* Статус */}
-                <div className="flex items-center gap-3 py-2">
-                  <div className="flex items-center gap-1.5 w-[161px] shrink-0">
-                    <span className="text-xs text-foreground/50 font-medium">Статус</span>
-                  </div>
-                  <div className="flex-1 min-w-0 text-sm flex items-center gap-2">
-                    <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium ${st.bg} ${st.color}`}>{st.label}</span>
-                    <div className="flex-1" />
-                    <CollapsibleTrigger asChild>
-                      <button className="w-5 h-5 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors">
-                        <ChevronDown className="w-3.5 h-3.5 text-foreground/30 transition-transform duration-200 [[data-state=open]>button>&]:rotate-180" />
-                      </button>
-                    </CollapsibleTrigger>
-                  </div>
-                </div>
-                <CollapsibleContent>
-                  <InfoRow label="Дата создания">
-                    <div className="flex items-center gap-1.5">
-                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/40" />
-                      <span className="text-xs">
-                        {task.createdDate ? (() => {
-                          const d = new Date(task.createdDate);
-                          return `${d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" })} ${d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}`;
-                        })() : "—"}
-                      </span>
-                      <span className="text-[11px] text-muted-foreground/50">ID {task.id}</span>
-                    </div>
-                  </InfoRow>
-                </CollapsibleContent>
-              </div>
-            </Collapsible>
 
 
             {checklists.map((cl, clIndex) =>
