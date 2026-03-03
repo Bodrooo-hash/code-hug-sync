@@ -839,10 +839,10 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 placeholder="Вы - большой молодец! Добавьте финальное описание выполненных работ и результатов..."
                 className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed"
               />
-              <div className="mt-1.5 border-t border-foreground/[0.04] pt-1.5">
-                <button onClick={() => resultFileInputRef.current?.click()} className="group/rf flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
-                  <Paperclip className="w-4 h-4 text-foreground/30 group-hover/rf:text-blue1 transition-colors" />
-                  <span className="text-xs text-foreground/30 group-hover/rf:text-blue1 transition-colors">Прикрепить файлы</span>
+              <div className="mt-1.5 border-t border-foreground/[0.06] pt-1.5">
+                <button onClick={() => resultFileInputRef.current?.click()} className="group/rf flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors">
+                  <Paperclip className="w-3.5 h-3.5 text-foreground/30 group-hover/rf:text-blue1 transition-colors" />
+                  <span className="text-[11px] text-foreground/30 group-hover/rf:text-blue1 transition-colors">Прикрепить файлы</span>
                 </button>
                 <input ref={resultFileInputRef} type="file" multiple className="hidden" onChange={(e) => {
                   const files = e.target.files ? Array.from(e.target.files) : [];
