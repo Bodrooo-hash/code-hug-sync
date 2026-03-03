@@ -522,7 +522,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 onInput={(e) => setLocalTitle((e.target as HTMLElement).textContent || "")}
                 onKeyDown={(e) => {if (e.key === "Enter") {e.preventDefault();handleSaveTitle();}if (e.key === "Escape") {if (titleRef.current) titleRef.current.textContent = task.title;setLocalTitle(task.title);setEditingTitle(false);}}}
                 className={cn(
-                  "text-base font-semibold truncate text-foreground outline-none",
+                  "text-base font-semibold truncate text-blue1 outline-none",
                   editingTitle && "border-b border-primary truncate-none"
                 )}>
                 
