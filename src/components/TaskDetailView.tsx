@@ -133,7 +133,7 @@ const StatusRoadmap = ({ status, onStatusChange }: { status: string; onStatusCha
         <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
         <span className="text-xs text-foreground/30 shrink-0">Статус</span>
         <div className="overflow-hidden flex-1 min-w-0">
-          <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap ${collapsed ? 'invisible absolute' : ''}`}>
+          <div ref={measureRef} className={`flex items-center gap-0 whitespace-nowrap w-[85%] ${collapsed ? 'invisible absolute' : ''}`}>
             {roadmapSteps.map((step, i, arr) => {
               const isActive = status === step.key;
               const stepIdx = roadmapOrder.indexOf(step.key);
