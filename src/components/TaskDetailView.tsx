@@ -1009,7 +1009,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
                 <FileText className="w-3.5 h-3.5 text-red-500" />
-                <span className="text-xs font-medium text-red-500">Комментарии к проблеме</span>
+                <span className="text-xs font-medium text-red-500">Комментарии к проблеме:</span>
               </div>
               <textarea
                 placeholder="Опишите проблему, с которой вы столкнулись..."
