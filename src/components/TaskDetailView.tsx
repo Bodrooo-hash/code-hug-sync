@@ -736,7 +736,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               <div className="flex items-center gap-2 w-full px-2.5 py-1.5">
                 <CircleDot className="w-4 h-4 text-foreground/30 shrink-0" />
                 <span className="text-xs text-foreground/30">Статус</span>
-                <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1 ${st.bg} ${st.color}`}><st.icon className="w-3 h-3" />{st.label}</span>
+                <span className={`ml-[20%] text-[11px] px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1 ${st.bg} ${st.color}`}><st.icon className="w-3 h-3" />{st.label}</span>
               </div>
             </div>
 
