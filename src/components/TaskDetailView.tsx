@@ -682,9 +682,9 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               ) : (
                 <button
                   onClick={() => setEditingDescription(true)}
-                  className="w-full rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-2.5 py-1.5 text-left group/desc flex items-center gap-2 hover:border-foreground/[0.12] transition-colors"
+                  className="w-full rounded-xl border border-foreground/[0.06] bg-foreground/[0.03] px-3 py-2.5 text-left group/desc flex items-center gap-2 hover:border-foreground/[0.12] transition-colors"
                 >
-                  <FileText className="w-4 h-4 text-foreground/30 shrink-0" />
+                  <FileText className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
                   <div className="flex-1 min-w-0 text-xs text-foreground/60 truncate" dangerouslySetInnerHTML={{ __html: localDescription || '<span class="text-foreground/30">Описание</span>' }} />
                   <Pencil className="w-3 h-3 text-foreground/20 group-hover/desc:text-foreground/50 transition-colors shrink-0" />
                 </button>
