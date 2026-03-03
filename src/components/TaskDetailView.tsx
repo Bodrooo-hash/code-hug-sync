@@ -824,7 +824,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 <span className="text-xs font-medium text-foreground/60">Финальный результат задачи</span>
               </div>
               <textarea
-                placeholder="Опишите результат выполнения задачи..."
+                placeholder="Вы - большой молодец! Добавьте финальное описание выполненных работ и результатов..."
                 className="w-full min-h-[60px] text-xs text-foreground/70 placeholder:text-foreground/25 bg-transparent border-none outline-none resize-none px-1 py-1 leading-relaxed"
               />
             </div>
