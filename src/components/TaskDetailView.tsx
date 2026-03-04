@@ -843,9 +843,9 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 </div>
                 <CollapsibleContent>
                   <InfoRow label="Дата создания">
-                    <div className="flex items-center gap-1.5">
-                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/40" />
-                      <span className="text-xs">
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
+                      <span>
                         {task.createdDate ? (() => {
                           const d = new Date(task.createdDate);
                           return `${d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" })} ${d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}`;
@@ -855,9 +855,9 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                     </div>
                   </InfoRow>
                   <InfoRow label="Дата начала">
-                    <div className="flex items-center gap-1.5">
-                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/40" />
-                      <span className="text-xs">
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
+                      <span>
                         {task.activityDate ? (() => {
                           const d = new Date(task.activityDate);
                           return `${d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" })} ${d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}`;
