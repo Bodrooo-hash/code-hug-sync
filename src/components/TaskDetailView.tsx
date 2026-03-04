@@ -107,7 +107,7 @@ const roadmapSteps = [
 
 const roadmapOrder = roadmapSteps.map((s) => s.key);
 
-const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChange?: (key: string) => void;}) => {
+const StatusRoadmap = ({ status, onStatusChange, locked }: {status: string;onStatusChange?: (key: string) => void; locked?: boolean;}) => {
   const [collapsed, setCollapsed] = useState(false);
   const measureRef = useRef<HTMLDivElement>(null);
   const currentIdx = roadmapOrder.indexOf(status);
@@ -141,10 +141,10 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
               return (
                 <div key={step.key} className="flex items-center flex-1 min-w-0">
                   <button
-                    disabled={status === "new"}
-                    onClick={() => status !== "new" && onStatusChange?.(step.key)}
+                    disabled={locked}
+                    onClick={() => !locked && onStatusChange?.(step.key)}
                     className={`flex items-center justify-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full ${
-                    status === "new" ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:opacity-80'} ${
+                    locked ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:opacity-80'} ${
                     isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'}`
                     }>
                     
@@ -161,7 +161,7 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
           {collapsed &&
           <Popover>
               <PopoverTrigger asChild>
-                <button disabled={status === "new"} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold ${activeStep.bg} ${activeStep.color} ring-1 ring-inset ring-current/20 w-full ${status === "new" ? 'cursor-not-allowed opacity-50' : ''}`}>
+                <button disabled={locked} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold ${activeStep.bg} ${activeStep.color} ring-1 ring-inset ring-current/20 w-full ${locked ? 'cursor-not-allowed opacity-50' : ''}`}>
                   <activeStep.icon className="w-3 h-3 shrink-0" />
                   <span className="truncate">{activeStep.label}</span>
                   <ChevronDown className="w-3 h-3 ml-auto shrink-0 opacity-50" />
@@ -173,8 +173,8 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
                 return (
                   <button
                     key={step.key}
-                    disabled={status === "new"}
-                    onClick={() => status !== "new" && onStatusChange?.(step.key)}
+                    disabled={locked}
+                    onClick={() => !locked && onStatusChange?.(step.key)}
                     className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}>
                     
                       <step.icon className="w-3.5 h-3.5 shrink-0" />
@@ -550,7 +550,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </p>
             }
           </div>
-          {localStatus === "new" &&
+          {(localStatus === "new" || localStatus === "1" || localStatus === "2") &&
           <button
             disabled={saving}
             onClick={async () => {
@@ -915,7 +915,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <StatusRoadmap status={localStatus} onStatusChange={handleStatusChange} />
+            <StatusRoadmap status={localStatus} onStatusChange={handleStatusChange} locked={localStatus === "new" || localStatus === "1" || localStatus === "2"} />
 
 
             {checklists.map((cl, clIndex) =>
