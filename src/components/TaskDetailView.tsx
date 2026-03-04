@@ -1049,8 +1049,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
             {localStatus === "approval" && <div className="rounded-xl border border-border bg-card px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
-                <FileText className="w-3.5 h-3.5 text-yellow-500" />
-                <span className="text-xs font-medium text-yellow-500">Финальный результат задачи:</span>
+                <FileText className="w-3.5 h-3.5 text-yellow-600" />
+                <span className="text-xs font-medium text-yellow-600">Финальный результат задачи:</span>
               </div>
               <textarea
                 placeholder="Вы - большой молодец! Добавьте финальное описание выполненных работ и результатов..."
