@@ -647,8 +647,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                         </div> :
 
                       <div className={cn("flex items-center gap-2 group/pick", !canEdit && "pointer-events-none opacity-60")}>
-                          <User className="w-4 h-4 text-muted-foreground group-hover/pick:text-ring transition-colors" />
-                          <span className="text-xs text-muted-foreground group-hover/pick:text-ring transition-colors">Выбрать</span>
+                          <User className="w-4 h-4 text-foreground/30 group-hover/pick:text-ring transition-colors" />
+                          <span className="text-xs text-foreground/30 group-hover/pick:text-ring transition-colors">Выбрать</span>
                         </div>;
 
                     })()}
@@ -714,8 +714,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                         </div> :
 
                       <div className={cn("flex items-center gap-2 group/pick", !canEdit && "pointer-events-none opacity-60")}>
-                          <User className="w-4 h-4 text-muted-foreground group-hover/pick:text-ring transition-colors" />
-                          <span className="text-xs text-muted-foreground group-hover/pick:text-ring transition-colors">Выбрать</span>
+                          <User className="w-4 h-4 text-foreground/30 group-hover/pick:text-ring transition-colors" />
+                          <span className="text-xs text-foreground/30 group-hover/pick:text-ring transition-colors">Выбрать</span>
                         </div>;
 
                     })()}
