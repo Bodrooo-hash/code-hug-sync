@@ -465,14 +465,11 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
   const PersonBadge = ({ name, icon, onClick }: {name: string;icon?: string;onClick?: () => void;}) =>
   <div
-    className={cn("flex items-center gap-2", onClick && "cursor-pointer hover:text-blue1 transition-colors")}
+    className={cn("flex items-center gap-2 group/person", onClick && "cursor-pointer transition-colors")}
     onClick={onClick}>
     
-      <Avatar className="w-6 h-6">
-        <AvatarImage src={icon} />
-        <AvatarFallback className="text-[8px] bg-muted">{getInitials(name)}</AvatarFallback>
-      </Avatar>
-      <span className="text-xs">{name}</span>
+      <User className="w-4 h-4 text-foreground/30 group-hover/person:text-ring transition-colors" />
+      <span className="text-xs text-foreground/30 group-hover/person:text-ring transition-colors">{name}</span>
       {/* clickable */}
     </div>;
 
