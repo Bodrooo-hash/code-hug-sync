@@ -760,13 +760,13 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                       {canEdit ?
                       <Popover open={editingDeadline} onOpenChange={(v) => {if (!v) handleSaveDeadline();setEditingDeadline(v);}}>
                           <PopoverTrigger asChild>
-                            <div className="flex items-center gap-1 cursor-pointer hover:text-blue1 transition-colors text-xs">
-                              <CalendarIcon className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                              <span className={overdue ? "text-red-500 font-medium" : ""}>
+                            <div className="flex items-center gap-1 cursor-pointer hover:text-blue1 transition-colors text-xs text-foreground/70">
+                              <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
+                              <span className={cn("truncate", overdue ? "text-red-500 font-medium" : "")}>
                                 {overdue && <Clock className="w-3 h-3 inline mr-1" />}
                                 {localDeadline ? formatDate(localDeadline.toISOString()) : "—"}
                               </span>
-{localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={overdue ? "text-red-500 font-medium" : ""}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
+{localDeadline && (() => {const h = localDeadline.getHours();const m = localDeadline.getMinutes();return h !== 0 || m !== 0 ? <span className={cn("truncate", overdue ? "text-red-500 font-medium" : "")}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span> : null;})()}
 {localDeadline && (() => {const now = new Date();const diff = Math.ceil((localDeadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));if (diff < 0) return <span className="text-red-500 text-[10px] ml-1">(срок сдачи просрочен)</span>;if (diff === 0) return <span className="text-yellow-500 text-[10px] ml-1">(сегодня)</span>;const dLabel = diff === 1 ? "день" : diff < 5 ? "дня" : "дней";const colorClass = diff <= 3 ? "text-yellow-500" : "text-foreground/40";return <span className={`${colorClass} text-[10px] ml-1`}>(осталось {diff} {dLabel})</span>;})()}
                               <CollapsibleTrigger asChild>
                                 <button className="w-5 h-5 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0 ml-1" onClick={(e) => e.stopPropagation()}>
