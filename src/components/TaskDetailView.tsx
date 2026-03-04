@@ -848,10 +848,10 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                   onClick={() => setEditingDescription(true)}
                   className="group/desc flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
                   
-                    <FileText className="w-4 h-4 text-muted-foreground group-hover/desc:text-foreground/50 transition-colors shrink-0" />
-                    <div className="flex items-center gap-1.5 min-w-0 text-xs text-muted-foreground group-hover/desc:text-foreground/50 truncate text-left transition-colors">
+                    <FileText className="w-4 h-4 text-foreground/30 group-hover/desc:text-ring transition-colors shrink-0" />
+                    <div className="flex items-center gap-1.5 min-w-0 text-xs text-foreground/30 group-hover/desc:text-ring truncate text-left transition-colors">
                       <span dangerouslySetInnerHTML={{ __html: localDescription || 'Описание' }} />
-                      <Pencil className="w-3 h-3 text-muted-foreground/50 group-hover/desc:text-foreground/50 transition-colors shrink-0 ml-3" />
+                      <Pencil className="w-3 h-3 text-foreground/30 group-hover/desc:text-ring transition-colors shrink-0 ml-3" />
                     </div>
                   </button>
                 </div>
@@ -860,8 +860,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
             <div className="rounded-xl border border-border bg-card px-3 py-2">
               <button onClick={() => fileInputRef.current?.click()} className="group/file flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
-                <Paperclip className="w-4 h-4 text-muted-foreground group-hover/file:text-blue1 transition-colors" />
-                <span className="text-xs text-muted-foreground group-hover/file:text-blue1 transition-colors">Добавить файлы</span>
+                <Paperclip className="w-4 h-4 text-foreground/30 group-hover/file:text-ring transition-colors" />
+                <span className="text-xs text-foreground/30 group-hover/file:text-ring transition-colors">Добавить файлы</span>
               </button>
               <input ref={fileInputRef} type="file" multiple className="hidden" onChange={(e) => {
                 const files = e.target.files ? Array.from(e.target.files) : [];
@@ -892,8 +892,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             <div className="rounded-xl border border-border bg-card px-3 py-2">
               <button onClick={() => {const newId = crypto.randomUUID();setChecklists((prev) => [...prev, { id: newId, title: "Чек-лист", items: [] }]);setActiveChecklistId(newId);}}
               className="group/cl flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
-                <ListChecks className="w-4 h-4 text-muted-foreground group-hover/cl:text-blue1 transition-colors" />
-                <span className="text-xs text-muted-foreground group-hover/cl:text-blue1 transition-colors">Добавить чек-лист</span>
+                <ListChecks className="w-4 h-4 text-foreground/30 group-hover/cl:text-ring transition-colors" />
+                <span className="text-xs text-foreground/30 group-hover/cl:text-ring transition-colors">Добавить чек-лист</span>
               </button>
             </div>
 
