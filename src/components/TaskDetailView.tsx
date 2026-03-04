@@ -547,6 +547,21 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </p>
             }
           </div>
+          {localStatus === "new" && (
+            <button
+              disabled={saving}
+              onClick={async () => {
+                await handleStatusChange("inwork");
+                try {
+                  await updateTask(task.id, { STATUS: "3" });
+                } catch {}
+              }}
+              className="shrink-0 px-3 py-1.5 rounded-lg bg-blue1 text-white text-xs font-semibold hover:bg-blue1/90 transition-colors disabled:opacity-50"
+            >
+              <Play className="w-3 h-3 inline mr-1" />
+              Начать работу
+            </button>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="w-7 h-7 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0">
