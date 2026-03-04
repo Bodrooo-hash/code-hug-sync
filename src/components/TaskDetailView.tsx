@@ -147,7 +147,7 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
                     }>
                     
                     <step.icon className="w-3 h-3 shrink-0" />
-                    <span className={`text-[10px] font-medium truncate ${isActive ? 'font-semibold' : ''}`}>{step.label}</span>
+                    <span className="text-[10px] font-semibold truncate">{step.label}</span>
                   </button>
                   {i < arr.length - 1 &&
                   <div className="w-3 h-px shrink-0 bg-foreground/10" />
