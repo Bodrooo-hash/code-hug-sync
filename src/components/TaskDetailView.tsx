@@ -854,6 +854,17 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                       <span className="text-[11px] text-muted-foreground/50">ID {task.id}</span>
                     </div>
                   </InfoRow>
+                  <InfoRow label="Дата начала">
+                    <div className="flex items-center gap-1.5">
+                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/40" />
+                      <span className="text-xs">
+                        {task.activityDate ? (() => {
+                          const d = new Date(task.activityDate);
+                          return `${d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" })} ${d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}`;
+                        })() : "—"}
+                      </span>
+                    </div>
+                  </InfoRow>
                 </CollapsibleContent>
               </Collapsible>
             </div>
