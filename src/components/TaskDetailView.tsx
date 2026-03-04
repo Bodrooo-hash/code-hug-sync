@@ -1007,8 +1007,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             {/* Комментарии к проблеме */}
             {localStatus === "help" &&
             <div className="rounded-xl border border-border bg-card px-3 py-2">
-              <div className="flex items-center gap-2 mb-1.5 px-2.5">
-                <FileText className="w-4 h-4 text-red-500 shrink-0" />
+              <div className="flex items-center gap-2 mb-1.5">
+                <FileText className="w-3.5 h-3.5 text-red-500" />
                 <span className="text-xs font-medium text-red-500">Комментарии к проблеме:</span>
               </div>
               <textarea
