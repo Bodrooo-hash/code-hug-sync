@@ -843,8 +843,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 </div>
                 <CollapsibleContent>
                   <InfoRow label="Дата создания">
-                    <div className="flex items-center gap-2">
-                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
+                    <div className="flex items-center gap-2 text-xs text-foreground/70">
+                      <CalendarIcon className="w-3.5 h-3.5 shrink-0" />
                       <span>
                         {task.createdDate ? (() => {
                           const d = new Date(task.createdDate);
@@ -855,8 +855,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                     </div>
                   </InfoRow>
                   <InfoRow label="Дата начала">
-                    <div className="flex items-center gap-2">
-                      <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
+                    <div className="flex items-center gap-2 text-xs text-foreground/70">
+                      <CalendarIcon className="w-3.5 h-3.5 shrink-0" />
                       <span>
                         {task.activityDate ? (() => {
                           const d = new Date(task.activityDate);
