@@ -565,20 +565,6 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               Начать работу
             </button>
           }
-          {localStatus !== "new" && localStatus !== "1" && localStatus !== "2" &&
-          <button
-            disabled={saving}
-            onClick={async () => {
-              await handleStatusChange("new");
-              try {
-                await updateTask(task.id, { STATUS: "6" });
-              } catch {}
-            }}
-            className="shrink-0 px-3 py-1.5 rounded-lg bg-muted text-foreground/60 text-xs font-semibold hover:bg-muted/80 transition-colors disabled:opacity-50">
-            <Pause className="w-3 h-3 inline mr-1" />
-            Приостановить
-          </button>
-          }
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="w-7 h-7 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0">
@@ -594,6 +580,19 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 <Eye className="w-4 h-4 mr-2" />
                 Стать наблюдателем
               </DropdownMenuItem>
+              {localStatus !== "new" && localStatus !== "1" && localStatus !== "2" &&
+              <DropdownMenuItem
+                disabled={saving}
+                onClick={async () => {
+                  await handleStatusChange("new");
+                  try {
+                    await updateTask(task.id, { STATUS: "6" });
+                  } catch {}
+                }}>
+                <Pause className="w-4 h-4 mr-2" />
+                Приостановить задачу
+              </DropdownMenuItem>
+              }
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
