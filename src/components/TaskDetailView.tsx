@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Clock, User, Send, Check, CalendarIcon, X, Paperclip, ListChecks, FileText, FileImage, FileSpreadsheet, FileArchive, FileVideo, FileAudio, File, Plus, Trash2, Settings, Pencil, Copy, MoreVertical, Eye, ChevronDown, Sparkles, Pause, Play, ShieldCheck, CircleCheck, Moon, CircleDot, type LucideIcon } from "lucide-react";
+import { ArrowLeft, Clock, User, Send, Check, CalendarIcon, X, Paperclip, ListChecks, FileText, FileImage, FileSpreadsheet, FileArchive, FileVideo, FileAudio, File, Plus, Trash2, Settings, Pencil, Copy, MoreVertical, Eye, ChevronDown, Sparkles, Pause, ShieldCheck, CircleCheck, Moon, CircleDot, type LucideIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -547,21 +547,21 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </p>
             }
           </div>
-          {localStatus === "new" && (
-            <button
-              disabled={saving}
-              onClick={async () => {
-                await handleStatusChange("inwork");
-                try {
-                  await updateTask(task.id, { STATUS: "3" });
-                } catch {}
-              }}
-              className="shrink-0 px-3 py-1.5 rounded-lg bg-blue1 text-white text-xs font-semibold hover:bg-blue1/90 transition-colors disabled:opacity-50"
-            >
-              <Play className="w-3 h-3 inline mr-1" />
+          {localStatus === "new" &&
+          <button
+            disabled={saving}
+            onClick={async () => {
+              await handleStatusChange("inwork");
+              try {
+                await updateTask(task.id, { STATUS: "3" });
+              } catch {}
+            }}
+            className="shrink-0 px-3 py-1.5 rounded-lg bg-blue1 text-white text-xs font-semibold hover:bg-blue1/90 transition-colors disabled:opacity-50">
+            
+              
               Начать работу
             </button>
-          )}
+          }
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="w-7 h-7 rounded-full hover:bg-foreground/[0.08] flex items-center justify-center transition-colors shrink-0">
@@ -858,7 +858,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                   </div>
                 </div> :
 
-               <div className="rounded-xl border border-border bg-white dark:bg-muted/50 px-3 py-2">
+              <div className="rounded-xl border border-border bg-white dark:bg-muted/50 px-3 py-2">
                   <button
                   onClick={() => setEditingDescription(true)}
                   className="group/desc flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
