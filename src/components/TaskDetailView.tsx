@@ -128,7 +128,7 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
   }, []);
 
   return (
-    <div className="rounded-xl border border-border bg-muted/50 px-3 py-3">
+    <div className="rounded-xl border border-border bg-card px-3 py-3">
       <div className="flex items-center gap-2 px-2.5">
         <CircleDot className="w-4 h-4 text-muted-foreground shrink-0" />
         <span className="text-xs text-muted-foreground shrink-0">Статус:</span>
@@ -843,7 +843,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                   </div>
                 </div> :
 
-              <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+              <div className="rounded-xl border border-border bg-card px-3 py-2">
                   <button
                   onClick={() => setEditingDescription(true)}
                   className="group/desc flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
@@ -858,7 +858,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               }
             </div>
 
-            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+            <div className="rounded-xl border border-border bg-card px-3 py-2">
               <button onClick={() => fileInputRef.current?.click()} className="group/file flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
                 <Paperclip className="w-4 h-4 text-muted-foreground group-hover/file:text-blue1 transition-colors" />
                 <span className="text-xs text-muted-foreground group-hover/file:text-blue1 transition-colors">Добавить файлы</span>
@@ -889,7 +889,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               }
             </div>
 
-            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+            <div className="rounded-xl border border-border bg-card px-3 py-2">
               <button onClick={() => {const newId = crypto.randomUUID();setChecklists((prev) => [...prev, { id: newId, title: "Чек-лист", items: [] }]);setActiveChecklistId(newId);}}
               className="group/cl flex items-center gap-2 w-full px-2.5 py-1.5 rounded-md transition-colors">
                 <ListChecks className="w-4 h-4 text-muted-foreground group-hover/cl:text-blue1 transition-colors" />
@@ -901,7 +901,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
 
             {checklists.map((cl, clIndex) =>
-            <div key={cl.id} className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+            <div key={cl.id} className="rounded-xl border border-border bg-card px-3 py-2">
                 <div className="flex items-center gap-1.5 mb-1">
                   <ListChecks className="w-3.5 h-3.5 text-muted-foreground" />
                   {activeChecklistId === cl.id ?
@@ -1006,7 +1006,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
 
             {/* Комментарии к проблеме */}
             {localStatus === "help" &&
-            <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+            <div className="rounded-xl border border-border bg-card px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
                 <FileText className="w-3.5 h-3.5 text-red-500" />
                 <span className="text-xs font-medium text-red-500">Комментарии к проблеме:</span>
@@ -1047,7 +1047,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
             </div>
             }
 
-            {localStatus === "approval" && <div className="rounded-xl border border-border bg-muted/50 px-3 py-2">
+            {localStatus === "approval" && <div className="rounded-xl border border-border bg-card px-3 py-2">
               <div className="flex items-center gap-2 mb-1.5">
                 <FileText className="w-3.5 h-3.5 text-blue1" />
                 <span className="text-xs font-medium text-blue1">Финальный результат задачи:</span>
