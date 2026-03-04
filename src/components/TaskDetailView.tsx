@@ -200,11 +200,13 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
   const overdue = isOverdue(task);
   const { data: currentUser } = useBitrix24Profile();
 
-  // Permission: current user is creator or responsible
+  // Permission: current user is creator, responsible, accomplice or auditor
   const canEdit = currentUser && (
   String(currentUser.ID) === task.createdBy ||
   String(currentUser.ID) === task.creator?.id ||
-  String(currentUser.ID) === task.responsible?.id);
+  String(currentUser.ID) === task.responsible?.id ||
+  task.accomplices?.some(a => String(a.id) === String(currentUser.ID)) ||
+  task.auditors?.some(a => String(a.id) === String(currentUser.ID)));
 
 
   // Editable state
