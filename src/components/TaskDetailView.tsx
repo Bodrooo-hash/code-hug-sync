@@ -511,7 +511,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
   const deadlineDateStr = localDeadline ? localDeadline.toISOString() : undefined;
 
   return (
-    <div className="flex h-full min-h-0 w-full border border-border rounded-2xl bg-card overflow-hidden">
+    <div className="flex h-full min-h-0 w-full border border-muted-foreground/30 rounded-2xl bg-card overflow-hidden">
       <div className="flex-1 min-w-0 flex flex-col border-r border-border">
         <div className="px-5 py-3 border-b border-border bg-muted/30 flex items-center gap-3">
           <button onClick={onBack} className="w-7 h-7 rounded-full bg-foreground/[0.05] hover:bg-foreground/[0.1] flex items-center justify-center transition-colors shrink-0">
