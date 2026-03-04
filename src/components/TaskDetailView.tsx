@@ -472,7 +472,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
         <AvatarImage src={icon} />
         <AvatarFallback className="text-[8px] bg-muted">{getInitials(name)}</AvatarFallback>
       </Avatar>
-      <span className="text-xs">{name}</span>
+      <span className="text-xs text-foreground/70 truncate">{name}</span>
       {/* clickable */}
     </div>;
 
