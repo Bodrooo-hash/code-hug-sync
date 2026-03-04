@@ -552,7 +552,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </p>
             }
           </div>
-          {(localStatus === "new" || localStatus === "1" || localStatus === "2") &&
+          {(localStatus === "new" || localStatus === "1" || localStatus === "2") && currentUser && (String(currentUser.ID) === task.createdBy || String(currentUser.ID) === task.creator?.id || String(currentUser.ID) === task.responsible?.id) &&
           <button
             disabled={saving}
             onClick={async () => {
@@ -582,7 +582,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                 <Eye className="w-4 h-4 mr-2" />
                 Стать наблюдателем
               </DropdownMenuItem>
-              {localStatus !== "new" && localStatus !== "1" && localStatus !== "2" &&
+              {localStatus !== "new" && localStatus !== "1" && localStatus !== "2" && currentUser && (String(currentUser.ID) === task.createdBy || String(currentUser.ID) === task.creator?.id || String(currentUser.ID) === task.responsible?.id) &&
               <DropdownMenuItem
                 disabled={saving}
                 onClick={async () => {
