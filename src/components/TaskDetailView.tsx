@@ -1017,8 +1017,8 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               
               <div className="mt-1.5 border-t border-foreground/[0.06] pt-1.5">
                 <button onClick={() => helpFileInputRef.current?.click()} className="group/hf flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors">
-                  <Paperclip className="w-3.5 h-3.5 text-muted-foreground group-hover/hf:text-red-500 transition-colors" />
-                  <span className="text-[11px] text-muted-foreground group-hover/hf:text-red-500 transition-colors">Прикрепить файлы</span>
+                  <Paperclip className="w-3.5 h-3.5 text-foreground/30 group-hover/hf:text-red-500 transition-colors" />
+                  <span className="text-[11px] text-foreground/30 group-hover/hf:text-red-500 transition-colors">Прикрепить файлы</span>
                 </button>
                 <input ref={helpFileInputRef} type="file" multiple className="hidden" onChange={(e) => {
                   const files = e.target.files ? Array.from(e.target.files) : [];
