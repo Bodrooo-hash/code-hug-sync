@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Clock, User, Send, Check, CalendarIcon, X, Paperclip, ListChecks, FileText, FileImage, FileSpreadsheet, FileArchive, FileVideo, FileAudio, File, Plus, Trash2, Settings, Pencil, Copy, MoreVertical, Eye, ChevronDown, Sparkles, Pause, ShieldCheck, CircleCheck, Moon, CircleDot, type LucideIcon } from "lucide-react";
+import { ArrowLeft, Clock, User, Send, Check, CalendarIcon, X, Paperclip, ListChecks, FileText, FileImage, FileSpreadsheet, FileArchive, FileVideo, FileAudio, File, Plus, Trash2, Settings, Pencil, Copy, MoreVertical, Eye, ChevronDown, Sparkles, Pause, ShieldCheck, CircleCheck, Moon, CircleDot, Play, type LucideIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -141,8 +141,10 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
               return (
                 <div key={step.key} className="flex items-center flex-1 min-w-0">
                   <button
-                    onClick={() => onStatusChange?.(step.key)}
-                    className={`flex items-center justify-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full cursor-pointer hover:opacity-80 ${
+                    disabled={status === "new"}
+                    onClick={() => status !== "new" && onStatusChange?.(step.key)}
+                    className={`flex items-center justify-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full ${
+                    status === "new" ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:opacity-80'} ${
                     isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'}`
                     }>
                     
@@ -159,7 +161,7 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
           {collapsed &&
           <Popover>
               <PopoverTrigger asChild>
-                <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold ${activeStep.bg} ${activeStep.color} ring-1 ring-inset ring-current/20 w-full`}>
+                <button disabled={status === "new"} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold ${activeStep.bg} ${activeStep.color} ring-1 ring-inset ring-current/20 w-full ${status === "new" ? 'cursor-not-allowed opacity-50' : ''}`}>
                   <activeStep.icon className="w-3 h-3 shrink-0" />
                   <span className="truncate">{activeStep.label}</span>
                   <ChevronDown className="w-3 h-3 ml-auto shrink-0 opacity-50" />
@@ -171,7 +173,8 @@ const StatusRoadmap = ({ status, onStatusChange }: {status: string;onStatusChang
                 return (
                   <button
                     key={step.key}
-                    onClick={() => onStatusChange?.(step.key)}
+                    disabled={status === "new"}
+                    onClick={() => status !== "new" && onStatusChange?.(step.key)}
                     className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}>
                     
                       <step.icon className="w-3.5 h-3.5 shrink-0" />
