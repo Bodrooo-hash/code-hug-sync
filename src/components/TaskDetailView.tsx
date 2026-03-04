@@ -459,7 +459,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
       <div className="flex items-center gap-1.5 w-[161px] shrink-0">
         <span className="text-xs text-foreground/50 font-medium">{label}</span>
       </div>
-      <div className="flex-1 min-w-0 text-sm">{children}</div>
+      <div className="flex-1 min-w-0 min-h-[24px] flex items-center text-sm">{children}</div>
     </div>;
 
 
