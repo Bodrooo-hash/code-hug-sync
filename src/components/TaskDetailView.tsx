@@ -107,7 +107,7 @@ const roadmapSteps = [
 
 const roadmapOrder = roadmapSteps.map((s) => s.key);
 
-const StatusRoadmap = ({ status, onStatusChange, locked }: {status: string;onStatusChange?: (key: string) => void; locked?: boolean;}) => {
+const StatusRoadmap = ({ status, onStatusChange, locked, disabledKeys = [] }: {status: string;onStatusChange?: (key: string) => void; locked?: boolean; disabledKeys?: string[];}) => {
   const [collapsed, setCollapsed] = useState(false);
   const measureRef = useRef<HTMLDivElement>(null);
   const currentIdx = roadmapOrder.indexOf(status);
@@ -138,13 +138,14 @@ const StatusRoadmap = ({ status, onStatusChange, locked }: {status: string;onSta
               const isActive = status === step.key;
               const stepIdx = roadmapOrder.indexOf(step.key);
               const isPassed = currentIdx > stepIdx && currentIdx !== -1;
+              const isDisabled = locked || disabledKeys.includes(step.key);
               return (
                 <div key={step.key} className="flex items-center flex-1 min-w-0">
                   <button
-                    disabled={locked}
-                    onClick={() => !locked && onStatusChange?.(step.key)}
+                    disabled={isDisabled}
+                    onClick={() => !isDisabled && onStatusChange?.(step.key)}
                     className={`flex items-center justify-center gap-0.5 px-1 py-1 rounded-lg transition-all w-full ${
-                    locked ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:opacity-80'} ${
+                    isDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:opacity-80'} ${
                     isActive ? `${step.bg} ${step.color} ring-1 ring-inset ring-current` : isPassed ? 'bg-foreground/[0.04] text-foreground/30' : 'bg-transparent text-foreground/20 ring-1 ring-inset ring-foreground/10 hover:bg-foreground/[0.03]'}`
                     }>
                     
@@ -170,12 +171,13 @@ const StatusRoadmap = ({ status, onStatusChange, locked }: {status: string;onSta
               <PopoverContent className="w-48 p-1" align="start">
                 {roadmapSteps.map((step) => {
                 const isActive = status === step.key;
+                const isStepDisabled = locked || disabledKeys.includes(step.key);
                 return (
                   <button
                     key={step.key}
-                    disabled={locked}
-                    onClick={() => !locked && onStatusChange?.(step.key)}
-                    className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}>
+                    disabled={isStepDisabled}
+                    onClick={() => !isStepDisabled && onStatusChange?.(step.key)}
+                    className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs transition-colors ${isStepDisabled ? 'opacity-50 cursor-not-allowed' : ''} ${isActive ? `${step.bg} ${step.color} font-semibold` : 'hover:bg-foreground/5 text-foreground/60'}`}>
                     
                       <step.icon className="w-3.5 h-3.5 shrink-0" />
                       {step.label}
@@ -928,7 +930,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
               </button>
             </div>
 
-            <StatusRoadmap status={localStatus} onStatusChange={handleStatusChange} locked={localStatus === "new" || localStatus === "1" || localStatus === "2"} />
+            <StatusRoadmap status={localStatus} onStatusChange={handleStatusChange} locked={localStatus === "new" || localStatus === "1" || localStatus === "2"} disabledKeys={!(currentUser && (String(currentUser.ID) === task.createdBy || String(currentUser.ID) === task.creator?.id)) ? ["done"] : []} />
 
 
             {checklists.map((cl, clIndex) =>
