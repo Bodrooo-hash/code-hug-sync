@@ -761,7 +761,7 @@ const TaskDetailView = ({ task, members, projectName, sectionName, onBack }: Pro
                       <Popover open={editingDeadline} onOpenChange={(v) => {if (!v) handleSaveDeadline();setEditingDeadline(v);}}>
                           <PopoverTrigger asChild>
                             <div className="flex items-center gap-1 cursor-pointer hover:text-blue1 transition-colors text-xs text-foreground/70">
-                              <CalendarIcon className="w-3.5 h-3.5 text-foreground/30 shrink-0" />
+                              <CalendarIcon className="w-3.5 h-3.5 text-foreground/70 shrink-0" />
                               <span className={cn("truncate", overdue ? "text-red-500 font-medium" : "")}>
                                 {overdue && <Clock className="w-3 h-3 inline mr-1" />}
                                 {localDeadline ? formatDate(localDeadline.toISOString()) : "—"}
